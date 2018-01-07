@@ -9,7 +9,7 @@ module Minitest
   end
 end
 
-require_relative 'core/core'
+require 'appium_lib_core'
 
 module Appium
   REQUIRED_VERSION_XCUITEST = '1.6.0'.freeze
@@ -36,9 +36,11 @@ module Appium
     attr_reader :sauce_endpoint
 
     # from Core
+    # read http://www.rubydoc.info/github/appium/ruby_lib_core/Appium/Core/Driver
     attr_reader :caps
     attr_reader :custom_url
     attr_reader :export_session
+    attr_reader :export_session_path
     attr_reader :default_wait
     attr_reader :appium_port
     attr_reader :appium_device
@@ -63,55 +65,68 @@ module Appium
     #
     # @example
     #
-    #     ```ruby
-    #     require 'rubygems'
-    #     require 'appium_lib'
+    #   require 'rubygems'
+    #   require 'appium_lib'
     #
-    #     # platformName takes a string or a symbol.
-    #
-    #     # Start iOS driver with global scope
-    #     opts = {
-    #              caps: {
-    #                platformName: :ios,
-    #                app: '/path/to/MyiOS.app'
-    #              },
-    #              appium_lib: {
-    #                wait_timeout: 30
-    #              }
+    #   # platformName takes a string or a symbol.
+    #   # Start iOS driver with global scope
+    #   opts = {
+    #            caps: {
+    #              platformName: :ios,
+    #              app: '/path/to/MyiOS.app'
+    #            },
+    #            appium_lib: {
+    #              wait_timeout: 30
     #            }
-    #     Appium::Driver.new(opts, true).start_driver
+    #          }
+    #   Appium::Driver.new(opts, true).start_driver
     #
-    #     # Start Android driver with global scope
-    #     opts = {
-    #              caps: {
-    #                platformName: :android,
-    #                app: '/path/to/my.apk'
-    #              },
-    #              appium_lib: {
-    #                wait_timeout: 30,
-    #                wait_interval: 1
-    #              }
+    #   # Start Android driver with global scope
+    #   opts = {
+    #            caps: {
+    #              platformName: :android,
+    #              app: '/path/to/my.apk'
+    #            },
+    #            appium_lib: {
+    #              wait_timeout: 30,
+    #              wait_interval: 1
     #            }
-    #     Appium::Driver.new(opts, true).start_driver
+    #          }
+    #   Appium::Driver.new(opts, true).start_driver
     #
-    #     # Start iOS driver without global scope
-    #     opts = {
-    #              caps: {
-    #                platformName: :ios,
-    #                app: '/path/to/MyiOS.app'
-    #              },
-    #              appium_lib: {
-    #                wait_timeout: 30
-    #              }
+    #   # Start iOS driver without global scope
+    #   opts = {
+    #            caps: {
+    #              platformName: :ios,
+    #              app: '/path/to/MyiOS.app'
+    #            },
+    #            appium_lib: {
+    #              wait_timeout: 30
     #            }
-    #     Appium::Driver.new(opts, false).start_driver
-    #     ```
+    #          }
+    #   Appium::Driver.new(opts, false).start_driver
+    #
+    #   # Start iOS driver without global scope
+    #   opts = {
+    #            caps: {
+    #              platformName: :ios,
+    #              app: '/path/to/MyiOS.app'
+    #            },
+    #            appium_lib: {
+    #              wait_timeout: 30
+    #            },
+    #            global_driver: false
+    #          }
+    #   Appium::Driver.new(opts).start_driver
     #
     # @param opts [Object] A hash containing various options.
     # @param global_driver [Bool] A bool require global driver before initialize.
     # @return [Driver]
     def initialize(opts = {}, global_driver = nil)
       # TODO: set `global_driver = false` by default in the future.
+      # Capybara can't put `global_driver` as the 2nd argument.
+      global_driver = opts.delete :global_driver if global_driver.nil?
+
       if global_driver.nil?
         warn '[DEPRECATION] Appium::Driver.new(opts) will not generate global driver by default.' \
                  'If you would like to generate the global driver dy default, ' \
@@ -124,7 +139,7 @@ module Appium
       end
       raise 'opts must be a hash' unless opts.is_a? Hash
 
-      @core = Appium::Core::Driver.new(opts)
+      @core = Appium::Core.for(self, opts)
 
       opts = Appium.symbolize_keys opts
       appium_lib_opts = opts[:appium_lib] || {}
@@ -132,6 +147,7 @@ module Appium
       @caps = @core.caps
       @custom_url = @core.custom_url
       @export_session = @core.export_session
+      @export_session_path = @core.export_session_path
       @default_wait = @core.default_wait
       @appium_port = @core.port
       @appium_wait_timeout = @core.wait_timeout
@@ -147,25 +163,19 @@ module Appium
       @appium_debug = appium_lib_opts.fetch :debug, !!defined?(Pry)
       set_sauce_related_values(appium_lib_opts)
 
-      # Extend core methods
-      extend Appium::Core
-      extend Appium::Core::Device
+      # Extend Common methods
       extend Appium::Common
+      extend Appium::Device
 
       # Extend each driver's methods
       extend_for(device: @core.device, automation_name: @core.automation_name)
 
       # for command
-      patch_remote_driver_core_commands(bridge: :oss)
-      patch_remote_driver_core_commands(bridge: :w3c)
-      patch_remote_driver_commands(bridge: :oss) # override
-      patch_remote_driver_commands(bridge: :w3c) # override
 
       if @appium_debug
-        Appium::Logger.ap_debug opts unless opts.empty?
+        Appium::Logger.debug opts unless opts.empty?
         Appium::Logger.debug "Debug is: #{@appium_debug}"
         Appium::Logger.debug "Device is: #{@core.device}"
-        patch_webdriver_bridge
       end
 
       # Save global reference to last created Appium driver for top level methods.
@@ -182,35 +192,16 @@ module Appium
       when :android
         case automation_name
         when :uiautomator2
-          extend Appium::Android
-          extend Appium::Android::SearchContext
-          extend Appium::Android::Device
-          extend Appium::Android::Uiautomator2
-          extend Appium::Android::Uiautomator2::Helper
-          extend Appium::Android::Uiautomator2::Element
+          ::Appium::Android::Uiautomator2::Bridge.for(self)
         else # default and UiAutomator
-          extend Appium::Android
-          extend Appium::Android::SearchContext
-          extend Appium::Android::Device
+          ::Appium::Android::Bridge.for(self)
         end
       when :ios
         case automation_name
         when :xcuitest
-          extend Appium::Ios
-          extend Appium::Ios::SearchContext
-          extend Appium::Ios::Device
-          extend Appium::Ios::Xcuitest
-          extend Appium::Ios::Xcuitest::SearchContext
-          extend Appium::Ios::Xcuitest::Command
-          extend Appium::Ios::Xcuitest::Helper
-          extend Appium::Ios::Xcuitest::Gesture
-          extend Appium::Ios::Xcuitest::Device
-          extend Appium::Ios::Xcuitest::Element
+          ::Appium::Ios::Xcuitest::Bridge.for(self)
         else # default and UIAutomation
-          extend Appium::Ios
-          extend Appium::Ios::SearchContext
-          extend Appium::Ios::Device
-          patch_webdriver_element
+          ::Appium::Ios::Bridge.for(self)
         end
       when :mac
         # no Mac specific extentions
@@ -243,20 +234,21 @@ module Appium
     # Returns a hash of the driver attributes
     def driver_attributes
       {
-          caps:             @core.caps,
-          automation_name:  @core.automation_name,
-          custom_url:       @core.custom_url,
-          export_session:   @core.export_session,
-          default_wait:     @core.default_wait,
-          sauce_username:   @sauce.username,
-          sauce_access_key: @sauce.access_key,
-          sauce_endpoint:   @sauce.endpoint,
-          port:             @core.port,
-          device:           @core.device,
-          debug:            @appium_debug,
-          listener:         @listener,
-          wait_timeout:     @core.wait_timeout,
-          wait_interval:    @core.wait_interval
+          caps:                @core.caps,
+          automation_name:     @core.automation_name,
+          custom_url:          @core.custom_url,
+          export_session:      @core.export_session,
+          export_session_path: @core.export_session_path,
+          default_wait:        @core.default_wait,
+          sauce_username:      @sauce.username,
+          sauce_access_key:    @sauce.access_key,
+          sauce_endpoint:      @sauce.endpoint,
+          port:                @core.port,
+          device:              @core.device,
+          debug:               @appium_debug,
+          listener:            @listener,
+          wait_timeout:        @core.wait_timeout,
+          wait_interval:       @core.wait_interval
       }
     end
 
@@ -290,6 +282,26 @@ module Appium
       !@core.automation_name.nil? && @core.automation_name == :xcuitest
     end
 
+    # Get the dialect value whether current driver is OSS or W3C
+    #
+    # @return [:oss | :w3c]
+    #
+    #  @example
+    #
+    #      if dialect == :w3c
+    #        driver.action
+    #              .move_to_location(500, 500).pointer_down(:left)
+    #              .move_to_location(0, 700)
+    #              .release.perform
+    #      else
+    #        action = TouchAction.new(driver).press(x: 500, y: 500).move_to(500, 700).release
+    #        action.perform
+    #      end
+    #
+    def dialect
+      @driver.dialect
+    end
+
     # Return true if the target Appium server is over REQUIRED_VERSION_XCUITEST.
     # If the Appium server is under REQUIRED_VERSION_XCUITEST, then error is raised.
     # @return [Boolean]
@@ -305,14 +317,13 @@ module Appium
 
     # Returns the server's version info
     #
-    # ```ruby
-    # {
+    # @example
+    #   {
     #     "build" => {
     #         "version" => "0.18.1",
     #         "revision" => "d242ebcfd92046a974347ccc3a28f0e898595198"
     #     }
-    # }
-    # ```
+    #   }
     #
     # @return [Hash]
     def appium_server_version
@@ -322,6 +333,7 @@ module Appium
       # server (TestObject for instance) does not respond to status call
       {}
     end
+    alias remote_status appium_server_version
 
     # Return the platform version as an array of integers
     # @return [Array<Integer>]
@@ -329,19 +341,13 @@ module Appium
       @core.platform_version
     end
 
-    # @private
-    def ios_version
-      warn '[DEPRECATION] ios_version will be removed. Please use platform_version instead.'
-      platform_version
-    end
-
     # Returns the client's version info
     #
-    # ```ruby
-    # {
-    #     "version" => "9.1.1"
-    # }
-    # ```
+    # @example
+    #
+    #   {
+    #       "version" => "9.1.1"
+    #   }
     #
     # @return [Hash]
     def appium_client_version
@@ -404,12 +410,29 @@ module Appium
 
     # Takes a png screenshot and saves to the target path.
     #
-    # Example: screenshot '/tmp/hi.png'
+    # @example
+    #
+    #   screenshot '/tmp/hi.png'
     #
     # @param png_save_path [String] the full path to save the png
-    # @return [nil]
+    # @return [File]
     def screenshot(png_save_path)
-      @core.screenshot png_save_path
+      @driver.save_screenshot png_save_path
+    end
+
+    # Takes a png screenshot of particular element's area
+    #
+    # @example
+    #
+    #   el = find_element :accessibility_id, zzz
+    #   element_screenshot el, '/tmp/hi.png'
+    #
+    # @param [String] element Element take a screenshot
+    # @param [String] png_save_path the full path to save the png
+    # @return [File]
+    def element_screenshot(element, png_save_path)
+      @driver.take_element_screenshot element, png_save_path
+      nil
     end
 
     # Quits the driver
@@ -417,38 +440,52 @@ module Appium
     def driver_quit
       @core.quit_driver
     end
-
-    # Alias for driver_quit
     alias quit_driver driver_quit
+
+    # Get the device window's size.
+    # @return [Selenium::WebDriver::Dimension]
+    #
+    # @example
+    #
+    #   size = @driver.window_size
+    #   size.width #=> Integer
+    #   size.height #=> Integer
+    #
+    def window_size
+      @driver.window_size
+    end
 
     # Creates a new global driver and quits the old one if it exists.
     # You can customise http_client as the following
     #
+    # Read http://www.rubydoc.info/github/appium/ruby_lib_core/Appium/Core/Device to understand more what the driver
+    # can call instance methods.
+    #
     # @example
-    #     ```ruby
-    #     require 'rubygems'
-    #     require 'appium_lib'
     #
-    #     # platformName takes a string or a symbol.
+    #   require 'rubygems'
+    #   require 'appium_lib'
     #
-    #     # Start iOS driver
-    #     opts = {
-    #              caps: {
-    #                platformName: :ios,
-    #                app: '/path/to/MyiOS.app'
-    #              },
-    #              appium_lib: {
-    #                wait_timeout: 30
-    #              }
+    #   # platformName takes a string or a symbol.
+    #   # Start iOS driver
+    #   opts = {
+    #            caps: {
+    #              platformName: :ios,
+    #              app: '/path/to/MyiOS.app'
+    #            },
+    #            appium_lib: {
+    #              wait_timeout: 30
     #            }
-    #     Appium::Driver.new(opts).start_driver
+    #          }
+    #   Appium::Driver.new(opts).start_driver
     #
     # @option http_client_ops [Hash] :http_client Custom HTTP Client
     # @option http_client_ops [Hash] :open_timeout Custom open timeout for http client.
     # @option http_client_ops [Hash] :read_timeout Custom read timeout for http client.
     # @return [Selenium::WebDriver] the new global driver
-    def start_driver(http_client_ops = { http_client: nil, open_timeout: 999_999, read_timeout: 999_999 })
-      driver_quit
+    def start_driver(http_client_ops =
+                         { http_client: ::Appium::Http::Default.new, open_timeout: 999_999, read_timeout: 999_999 })
+      @core.quit_driver
 
       # If automationName is set only in server side, then the following automation_name should be nil before
       # starting driver.
@@ -463,8 +500,6 @@ module Appium
 
       @appium_server_status = appium_server_version
       check_server_version_xcuitest
-
-      set_implicit_wait(@core.default_wait)
 
       @driver
     end
@@ -486,11 +521,11 @@ module Appium
 
     # Set implicit wait. Default to @core.default_wait.
     #
-    # ```ruby
-    # set_wait 2
-    # set_wait # @core.default_wait
+    # @example
     #
-    # ```
+    #   set_wait 2
+    #   set_wait # @core.default_wait
+    #
     #
     # @param timeout [Integer] the timeout in seconds
     # @return [void]
@@ -541,17 +576,17 @@ module Appium
 
     # Calls @driver.find_elements_with_appium
     #
-    # ```
-    # @driver = Appium::Driver.new(opts, false)
-    # @driver.find_elements :predicate, yyy
-    # ```
+    # @example
+    #
+    #   @driver = Appium::Driver.new(opts, false)
+    #   @driver.find_elements :predicate, yyy
     #
     # If you call `Appium.promote_appium_methods`, you can call `find_elements` directly.
     #
-    # ```
-    # @driver = Appium::Driver.new(opts, false)
-    # @driver.find_elements :predicate, yyy
-    # ```
+    # @example
+    #
+    #   @driver = Appium::Driver.new(opts, false)
+    #   @driver.find_elements :predicate, yyy
     #
     # If you call `Appium.promote_appium_methods`, you can call `find_elements` directly.
     #
@@ -563,10 +598,10 @@ module Appium
 
     # Calls @driver.find_element
     #
-    # ```
-    # @driver = Appium::Driver.new(opts, false)
-    # @driver.find_element :accessibility_id, zzz
-    # ```
+    # @example
+    #
+    #   @driver = Appium::Driver.new(opts, false)
+    #   @driver.find_element :accessibility_id, zzz
     #
     # If you call `Appium.promote_appium_methods`, you can call `find_element` directly.
     #
@@ -598,16 +633,6 @@ module Appium
     def x
       driver_quit
       exit # exit pry
-    end
-
-    private
-
-    # @private
-    def write_session_id(session_id)
-      File.open('/tmp/appium_lib_session', 'w') { |f| f.puts session_id }
-    rescue IOError => e
-      ::Appium::Logger.warn e
-      nil
     end
   end # class Driver
 end # module Appium

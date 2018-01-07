@@ -33,21 +33,20 @@ describe 'common/device_touchaction' do
   end
 
   t 'swipe' do
-    wait { Appium::TouchAction.new.swipe(start_x: 0.75, start_y: 0.25, end_x: 0.75, end_y: 50).perform }
-    wait { !exists { text_exact 'NFC' } }
-    wait { text_exact 'Bouncing Balls' }
-    back
+    wait { text('Animation').click }
+    wait { text_exact('Bouncing Balls').click }
+    wait { Appium::TouchAction.new.swipe(start_x: 0.75, start_y: 0.25, offset_x: 0.0, offset_y: 49.75).perform }
+    2.times { back }
     wait { text_exact 'NFC' }
   end
 
   t 'pinch & zoom' do
     wait { text_exact 'NFC' }
     wait { text_exact('Graphics').click }
-    wait { text('BitmapMesh').click }
-    wait do
-      zoom 200
-      pinch 75
-    end
+    wait { scroll_to('Touch Paint').click }
+    wait { zoom 200 }
+    wait { pinch 75 }
+    wait { text('Graphics/Touch Paint') }
     2.times { back }
     wait { text_exact 'NFC' }
   end

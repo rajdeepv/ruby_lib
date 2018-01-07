@@ -34,38 +34,15 @@ describe 'driver' do
       apk_name.must_equal 'api.apk'
     end
 
-    t 'verify Appium::Driver::Capabilities.init_caps_for_appium' do
-      expected_app = File.absolute_path('../test_apps/api.apk')
-      caps = ::Appium::Core::Driver::Capabilities.init_caps_for_appium(platformName: 'Android',
-                                                                       app:          expected_app,
-                                                                       appPackage:   'io.appium.android.apis',
-                                                                       appActivity:  '.ApiDemos',
-                                                                       deviceName:   'Nexus 7',
-                                                                       some_capability: 'some_capability')
-      caps_with_json = JSON.parse(caps.to_json)
-      caps_with_json['platformName'].must_equal 'Android'
-      caps_with_json['app'].must_equal expected_app
-      caps_with_json['appPackage'].must_equal 'io.appium.android.apis'
-      caps_with_json['appActivity'].must_equal '.ApiDemos'
-      caps_with_json['deviceName'].must_equal 'Nexus 7'
-      caps_with_json['someCapability'].must_equal 'some_capability'
-
-      caps[:platformName].must_equal 'Android'
-      caps[:app].must_equal expected_app
-      caps[:appPackage].must_equal 'io.appium.android.apis'
-      caps[:appActivity].must_equal '.ApiDemos'
-      caps[:deviceName].must_equal 'Nexus 7'
-      caps[:some_capability].must_equal 'some_capability'
-    end
-
     t 'verify all attributes' do
       actual                = driver_attributes
       caps_app_for_teardown = actual[:caps][:app]
       expected_app = File.absolute_path('../test_apps/api.apk')
 
-      expected            = { automation_name:   nil,
+      expected            = { automation_name:  :uiautomator2,
                               custom_url:       false,
                               export_session:   false,
+                              export_session_path: '/tmp/appium_lib_session',
                               default_wait:     1,
                               sauce_username:   nil,
                               sauce_access_key: nil,
@@ -82,14 +59,14 @@ describe 'driver' do
       caps_with_json['platformName'].must_equal 'android'
       caps_with_json['app'].must_equal expected_app
       caps_with_json['appPackage'].must_equal 'io.appium.android.apis'
-      caps_with_json['appActivity'].must_equal '.ApiDemos'
+      caps_with_json['appActivity'].must_equal 'io.appium.android.apis.ApiDemos'
       caps_with_json['deviceName'].must_equal 'Nexus 7'
       caps_with_json['someCapability'].must_equal 'some_capability'
 
       actual[:caps][:platformName].must_equal 'android'
       actual[:caps][:app].must_equal expected_app
       actual[:caps][:appPackage].must_equal 'io.appium.android.apis'
-      actual[:caps][:appActivity].must_equal '.ApiDemos'
+      actual[:caps][:appActivity].must_equal 'io.appium.android.apis.ApiDemos'
       actual[:caps][:deviceName].must_equal 'Nexus 7'
       actual[:caps][:some_capability].must_equal 'some_capability'
 
@@ -107,11 +84,6 @@ describe 'driver' do
         message = "\n\nactual:\n\n: #{actual.ai}expected:\n\n#{expected.ai}\n\n#{diff}"
         raise message
       end
-    end
-
-    t 'default timeout for http client' do
-      http_client.open_timeout.must_equal 999_999
-      http_client.read_timeout.must_equal 999_999
     end
   end
 
@@ -187,26 +159,6 @@ describe 'driver' do
       client_version = appium_client_version
       expected = { version: ::Appium::VERSION }
       client_version.must_equal expected
-    end
-
-    # Skip:
-    #   ios_capabilities # save for iOS tests
-    #   absolute_app_path # tested already by starting the driver for this test
-    #   server_url # sauce labs only
-
-    t 'set_immediate_value' do
-      wait { find('app').click }
-      wait { find('activity').click }
-      wait { find('custom title').click }
-
-      message = 'hello'
-
-      wait do
-        elem = textfield(1)
-        elem.clear
-        set_immediate_value(elem, message)
-        elem.text.must_equal message
-      end
     end
 
     t 'restart' do

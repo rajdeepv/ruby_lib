@@ -1,4 +1,4 @@
-#### appium_lib
+# appium_lib
 
 [![Gem Version](https://badge.fury.io/rb/appium_lib.svg)](http://badge.fury.io/rb/appium_lib)
 [![Dependency Status](https://gemnasium.com/appium/ruby_lib.svg)](https://gemnasium.com/appium/ruby_lib)
@@ -10,37 +10,42 @@
 
 - [appium_lib on RubyGems](https://rubygems.org/gems/appium_lib)
 - [Documentation for appium_lib](https://github.com/appium/ruby_lib/tree/master/docs)
-- [Appium Ruby Console](https://github.com/appium/ruby_console)
-- [Bootcamp quick start guide](http://sauceio.com/index.php/tag/appium-bootcamp/) & [Bootcamp example source](https://github.com/tourdedave/appium-getting-started-code-exampes)
-- [Mobile automation walkthrough with Ruby and Sauce](http://stackshare.io/sauce-labs/mobile-automation-with-appium-and-sauce-labs) & [code examples](https://github.com/jlipps/appium-ruby-example)
+    - [Documentation for core lib](http://www.rubydoc.info/github/appium/ruby_lib_core)
+        - Especially [driver method for Appium](http://www.rubydoc.info/github/appium/ruby_lib_core/Appium/Core/Device)
+- [Getting Started](https://github.com/appium/appium/blob/master/docs/en/about-appium/getting-started.md)
+- [code examples](https://github.com/appium/sample-code/tree/master/sample-code/examples/ruby)
 
 Helper methods for writing cross platform (iOS, Android) tests in Ruby using Appium. Note that user waits should not exceed 120 seconds if they're going to run on Sauce Labs.
 
-Make sure you're using Appium 1.0.0 or newer and Ruby 2.2+ with upgraded rubygems and bundler.
+[Ruby_lib_core](https://github.com/appium/ruby_lib_core) is the core driver library which provide `selenium-webdriver` related features and driver methods for Appium.
+The `ruby_lib` wrap the driver and serve many helpful methods for users.
 
-XCUITest for iOS requires `Appium 1.6.0+`. `appium_lib9.1.0+` requires `selenium-webdriver3.0.2+`.(`appium_lib9.0.0` or less requires `selenium-webdriver2.x`)
+# Setup
+## Requirement
+- [Appium](https://github.com/appium/appium#requirements)
+- Ruby: 2.2+
 
-#### Start appium server
+## Start appium server
 
-`node .`
-
-#### Install / Upgrade
-
-Update rubygems and bundler.
-
-```ruby
-gem update --system ;\
-gem update bundler
+```bash
+$ npm install -g appium
+$ appium
 ```
 
-Install the latest gem release.
+## Install / Upgrade
+- Update rubygems and bundler
+```bash
+$ gem update --system
+$ gem update bundler
+```
 
-```ruby
-gem uninstall -aIx appium_lib ;\
+- Install the latest gem release
+```bash
+gem uninstall -aIx appium_lib
 gem install --no-rdoc --no-ri appium_lib
 ```
 
-#### Sauce Labs env vars
+## [Sauce Labs env vars](https://github.com/appium/ruby_lib/blob/master/lib/appium_lib/sauce_labs.rb)
 
 - `SAUCE_USERNAME` Sauce username
 - `SAUCE_ACCESS_KEY` Sauce API key
@@ -48,12 +53,7 @@ gem install --no-rdoc --no-ri appium_lib
 
 (Note: If these variables are set, all tests will use Sauce Labs unless over-ridden in configuration.)
 
-#### Troubleshooting
-
-1. Does `adb kill-server; adb devices` list an active Android device?
-3. Are you running appium from source? `node .`
-
-#### Documentation
+# Documentation
 
 - [Installing Appium on OS X](https://github.com/appium/ruby_console/blob/master/osx.md)
 - [Overview](https://github.com/appium/ruby_lib/blob/master/docs/docs.md)
@@ -62,13 +62,19 @@ gem install --no-rdoc --no-ri appium_lib
     - [Tips for XCUITest for iOS](https://github.com/appium/ruby_lib/blob/master/docs/ios_xcuitest.md)
 - [Appium Server docs](https://github.com/appium/appium/tree/master/docs)
 
-#### Logging
+# Related libraries
+- [ruby_lib_core](https://github.com/appium/ruby_lib_core): Bridged commands, WebDriver dependencies
+    - We add new endpoints for Appium in the core library, and `ruby_lib` call the methods.
+- [ruby_console](https://github.com/appium/ruby_console): Appium Ruby Console
+- [appium_capybara](https://github.com/appium/appium_capybara): Gem enabling appium support in capybara
 
-[Log level](https://github.com/appium/ruby_lib/blob/1673a694121d2ae24ffd1530eb71b7015d44dc52/lib/appium_lib/logger.rb) can be adjusted. The default level is `Logger::WARN`
-
-```ruby
-Appium::Logger.level = Logger::INFO
-```
-
-#### Load Pry
+# Load Pry
 `Pry.config.pager = false` is set if you have no `.pryrc` files and `Pry` is defined.
+
+
+# Contribute
+## How to add new commands for `driver`
+- Add the new commands in [ruby_lib_core](https://github.com/appium/ruby_lib_core). [An example](https://github.com/appium/ruby_lib_core/commit/cdb02c29c8663d22d643b52fd65c8b2d1373bebb)
+
+## How to add new helpful methods
+- Add the new methods in this library

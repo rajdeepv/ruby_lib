@@ -71,12 +71,6 @@ module Appium
       end
     end # class AndroidElements
 
-    # Prints xml of the current page
-    # @return [void]
-    def source
-      _print_source get_source
-    end
-
     # Android only.
     # Returns a string containing interesting elements.
     # The text, content description, and id are returned.
@@ -113,33 +107,6 @@ module Appium
       class_name = opts.is_a?(Hash) ? opts.fetch(:class, nil) : opts
       puts get_android_inspect class_name
       nil
-    end
-
-    # Lists package, activity, and adb shell am start -n value for current app.
-    # Works on local host only (not remote).
-
-    # example line:
-    # "mFocusedApp=AppWindowToken{b1420058 token=Token{b128add0
-    #  ActivityRecord{b1264d10 u0 com.example.android.apis/.ApiDemos t23}}}"
-    def current_app
-      line = `adb shell dumpsys window windows`.each_line.grep(/mFocusedApp/).first.strip
-
-      _parse_current_app_line line
-    end
-
-    # @private
-    # noinspection RubyArgCount
-    def _parse_current_app_line(line)
-      match = line.match(/ ([^\/ ]+\/[^ }]+)[ }]/)
-      return nil unless match && match[1]
-
-      pair = match[1].split '/'
-      pkg  = pair.first
-      act  = pair.last
-      OpenStruct.new(line:     line,
-                     package:  pkg,
-                     activity: act,
-                     am_start: pkg + '/' + act)
     end
 
     # Find the first matching element by id
@@ -346,12 +313,6 @@ module Appium
     # @return [Element]
     def complex_finds_exact(class_name, value)
       find_elements :uiautomator, string_visible_exact(class_name, value)
-    end
-
-    # Returns XML string for the current page via `page_source`
-    # @return [String]
-    def get_source
-      @driver.page_source
     end
   end # module Android
 end # module Appium

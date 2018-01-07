@@ -1,6 +1,6 @@
-##### [load_settings](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L85) 
+##### [load_settings](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/appium.rb#L45) 
 
-> def self.load_settings(opts = {})
+> def load_settings(opts = {})
 
 Load arbitrary text ([toml format](https://github.com/toml-lang/toml))
 The toml is parsed by https://github.com/fbernier/tomlrb .
@@ -27,9 +27,9 @@ __Returns:__
 
 --
 
-##### [load_appium_txt](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L121) 
+##### [load_appium_txt](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/appium.rb#L79) 
 
-> def self.load_settings(opts = {})
+> def load_settings(opts = {})
 
 Load arbitrary text ([toml format](https://github.com/toml-lang/toml))
 The toml is parsed by https://github.com/fbernier/tomlrb .
@@ -45,7 +45,6 @@ port = 8080
 :app is expanded
 :require is expanded
 all keys are converted to symbols
-rubocop:disable Style/Alias
 
 __Parameters:__
 
@@ -57,9 +56,9 @@ __Returns:__
 
 --
 
-##### [expand_required_files](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L127) 
+##### [expand_required_files](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/appium.rb#L84) 
 
-> def self.expand_required_files(base_dir, file_paths)
+> def expand_required_files(base_dir, file_paths)
 
 
 
@@ -75,20 +74,9 @@ __Returns:__
 
 --
 
-##### [symbolize_keys](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L159) 
+##### [promote_singleton_appium_methods](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/appium.rb#L126) 
 
-> def self.symbolize_keys(hash)
-
-convert all keys (including nested) to symbols
-
-based on deep_symbolize_keys & deep_transform_keys from rails
-https://github.com/rails/docrails/blob/a3b1105ada3da64acfa3843b164b14b734456a50/activesupport/lib/active_support/core_ext/hash/keys.rb#L84
-
---
-
-##### [promote_singleton_appium_methods](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L180) 
-
-> def self.promote_singleton_appium_methods(modules, driver = $driver)
+> def promote_singleton_appium_methods(modules, driver = $driver)
 
 This method is intended to work with page objects that share
 a common module. For example, Page::HomePage, Page::SignIn
@@ -102,51 +90,33 @@ if modules is a module instead of an array, then the constants of
 that module are promoted on.
 otherwise, the array of modules will be used as the promotion target.
 
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array<Module>] modules - An array of modules
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Driver] driver - A driver to extend for
+
 --
 
-##### [promote_appium_methods](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L233) 
+##### [promote_appium_methods](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/appium.rb#L181) 
 
-> def self.promote_appium_methods(class_array, driver = $driver)
+> def promote_appium_methods(class_array, driver = $driver)
 
 Promote appium methods to class instance methods
 
 To promote methods to all classes:
 
-```ruby
-Appium.promote_appium_methods Object
-```
-
 It's better to promote on specific classes instead of Object
-
-```ruby
-# promote on rspec
-Appium.promote_appium_methods RSpec::Core::ExampleGroup
-```
-
-```ruby
-# promote on minispec
-Appium.promote_appium_methods Minitest::Spec
-```
 
 __Parameters:__
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array<Class>] class_array - An array of classes
 
---
-
-##### [selenium_webdriver_version_more?](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L260) 
-
-> def self.selenium_webdriver_version_more?(version)
-
-
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Boolean] 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Driver] driver - A driver to extend for
 
 --
 
-##### [global_webdriver_http_sleep](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L272) 
+##### [global_webdriver_http_sleep](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L24) 
 
 > def global_webdriver_http_sleep
 
@@ -154,7 +124,7 @@ The amount to sleep in seconds before every webdriver http call.
 
 --
 
-##### [global_webdriver_http_sleep=](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L272) 
+##### [global_webdriver_http_sleep=](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L24) 
 
 > def global_webdriver_http_sleep=(value)
 
@@ -162,94 +132,139 @@ The amount to sleep in seconds before every webdriver http call.
 
 --
 
-##### [caps](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L274) 
+##### [sauce](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L27) 
 
-> def caps
+> def sauce
 
-Selenium webdriver capabilities
-
---
-
-##### [custom_url](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L276) 
-
-> def custom_url
-
-Custom URL for the selenium server
+SauceLab's settings
 
 --
 
-##### [export_session](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L278) 
-
-> def export_session
-
-Export session id to textfile in /tmp for 3rd party tools
-
---
-
-##### [default_wait](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L283) 
-
-> def default_wait
-
-Default wait time for elements to appear
-Returns the default client side wait.
-This value is independent of what the server is using
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Integer] 
-
---
-
-##### [sauce_username](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L285) 
+##### [sauce_username](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L30) 
 
 > def sauce_username
 
 Username for use on Sauce Labs. Set `false` to disable Sauce, even when SAUCE_USERNAME is in ENV.
+same as @sauce.username
 
 --
 
-##### [sauce_access_key](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L287) 
+##### [sauce_access_key](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L33) 
 
 > def sauce_access_key
 
 Access Key for use on Sauce Labs. Set `false` to disable Sauce, even when SAUCE_ACCESS_KEY is in ENV.
+same as @sauce.access_key
 
 --
 
-##### [sauce_endpoint](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L289) 
+##### [sauce_endpoint](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L36) 
 
 > def sauce_endpoint
 
 Override the Sauce Appium endpoint to allow e.g. TestObject tests
+same as @sauce.endpoint
 
 --
 
-##### [appium_port](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L291) 
+##### [caps](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L40) 
+
+> def caps
+
+from Core
+read http://www.rubydoc.info/github/appium/ruby_lib_core/Appium/Core/Driver
+
+--
+
+##### [custom_url](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L41) 
+
+> def custom_url
+
+Returns the value of attribute custom_url
+
+--
+
+##### [export_session](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L42) 
+
+> def export_session
+
+Returns the value of attribute export_session
+
+--
+
+##### [export_session_path](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L43) 
+
+> def export_session_path
+
+Returns the value of attribute export_session_path
+
+--
+
+##### [default_wait](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L44) 
+
+> def default_wait
+
+Returns the value of attribute default_wait
+
+--
+
+##### [appium_port](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L45) 
 
 > def appium_port
 
-Appium's server port
+Returns the value of attribute appium_port
 
 --
 
-##### [appium_device](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L293) 
+##### [appium_device](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L46) 
 
 > def appium_device
 
-Device type to request from the appium server
+Returns the value of attribute appium_device
 
 --
 
-##### [automation_name](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L296) 
+##### [automation_name](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L47) 
 
 > def automation_name
 
-Automation name sent to appium server or received from server
-If automation_name is nil, it is not set both client side and server side.
+Returns the value of attribute automation_name
 
 --
 
-##### [appium_server_status](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L298) 
+##### [listener](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L48) 
+
+> def listener
+
+Returns the value of attribute listener
+
+--
+
+##### [http_client](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L49) 
+
+> def http_client
+
+Returns the value of attribute http_client
+
+--
+
+##### [appium_wait_timeout](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L50) 
+
+> def appium_wait_timeout
+
+Returns the value of attribute appium_wait_timeout
+
+--
+
+##### [appium_wait_interval](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L51) 
+
+> def appium_wait_interval
+
+Returns the value of attribute appium_wait_interval
+
+--
+
+##### [appium_server_status](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L54) 
 
 > def appium_server_status
 
@@ -257,7 +272,7 @@ Appium's server version
 
 --
 
-##### [appium_debug](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L300) 
+##### [appium_debug](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L56) 
 
 > def appium_debug
 
@@ -265,15 +280,7 @@ Boolean debug mode for the Appium Ruby bindings
 
 --
 
-##### [listener](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L302) 
-
-> def listener
-
-instance of AbstractEventListener for logging support
-
---
-
-##### [driver](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L305) 
+##### [driver](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L59) 
 
 > def driver
 
@@ -285,47 +292,15 @@ __Returns:__
 
 --
 
-##### [http_client](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L308) 
+##### [core](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L61) 
 
-> def http_client
+> def core
 
-Return http client called in start_driver()
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Selenium::WebDriver::Remote::Http::Default] the http client
+Instance of Appium::Core::Driver
 
 --
 
-##### [appium_wait_timeout](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L313) 
-
-> def appium_wait_timeout
-
-Return a time wait timeout
-Wait time for ::Appium::Common.wait or ::Appium::Common.wait_true.
-Provide Appium::Drive like { appium_lib: { wait_timeout: 20 } }
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Integer] 
-
---
-
-##### [appium_wait_interval](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L318) 
-
-> def appium_wait_interval
-
-Return a time wait timeout
-Wait interval time for ::Appium::Common.wait or ::Appium::Common.wait_true.
-Provide Appium::Drive like { appium_lib: { wait_interval: 20 } }
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Integer] 
-
---
-
-##### [initialize](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L372) 
+##### [initialize](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L125) 
 
 > def initialize(opts = {}, global_driver = nil)
 
@@ -344,15 +319,7 @@ __Returns:__
 
 --
 
-##### [set_appium_lib_specific_values](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L457) 
-
-> def set_appium_lib_specific_values(appium_lib_opts)
-
-
-
---
-
-##### [driver_attributes](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L483) 
+##### [driver_attributes](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L235) 
 
 > def driver_attributes
 
@@ -360,7 +327,7 @@ Returns a hash of the driver attributes
 
 --
 
-##### [device_is_android?](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L502) 
+##### [device_is_android?](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L255) 
 
 > def device_is_android?
 
@@ -372,11 +339,11 @@ __Returns:__
 
 --
 
-##### [automation_name_is_xcuitest?](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L508) 
+##### [device_is_ios?](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L259) 
 
-> def automation_name_is_xcuitest?
+> def device_is_ios?
 
-Return true if automationName is 'XCUITest'
+
 
 __Returns:__
 
@@ -384,7 +351,19 @@ __Returns:__
 
 --
 
-##### [automation_name_is_uiautomator2?](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L514) 
+##### [device_is_windows?](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L263) 
+
+> def device_is_windows?
+
+
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Boolean] 
+
+--
+
+##### [automation_name_is_uiautomator2?](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L269) 
 
 > def automation_name_is_uiautomator2?
 
@@ -396,7 +375,7 @@ __Returns:__
 
 --
 
-##### [automation_name_is_espresso?](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L520) 
+##### [automation_name_is_espresso?](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L275) 
 
 > def automation_name_is_espresso?
 
@@ -408,7 +387,41 @@ __Returns:__
 
 --
 
-##### [check_server_version_xcuitest](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L527) 
+##### [automation_name_is_xcuitest?](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L281) 
+
+> def automation_name_is_xcuitest?
+
+Return true if automationName is 'XCUITest'
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Boolean] 
+
+--
+
+##### [dialect](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L301) 
+
+> def dialect
+
+Get the dialect value whether current driver is OSS or W3C
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:oss | :w3c] @example
+
+    if dialect == :w3c
+      driver.action
+            .move_to_location(500, 500).pointer_down(:left)
+            .move_to_location(0, 700)
+            .release.perform
+    else
+      action = TouchAction.new(driver).press(x: 500, y: 500).move_to(500, 700).release
+      action.perform
+    end
+
+--
+
+##### [check_server_version_xcuitest](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L308) 
 
 > def check_server_version_xcuitest
 
@@ -421,26 +434,23 @@ __Returns:__
 
 --
 
-##### [appium_server_version](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L554) 
+##### [appium_server_version](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L329) 
 
 > def appium_server_version
 
 Returns the server's version info
 
-```ruby
-{
-    "build" => {
-        "version" => "0.18.1",
-        "revision" => "d242ebcfd92046a974347ccc3a28f0e898595198"
-    }
-}
-```
+__Returns:__
 
-Returns blank hash for Selenium Grid since `remote_status` gets 500 error
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] 
 
-```ruby
-{}
-```
+--
+
+##### [remote_status](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L336) 
+
+> def appium_server_version
+
+Returns the server's version info
 
 __Returns:__
 
@@ -448,25 +458,31 @@ __Returns:__
 
 --
 
-##### [appium_client_version](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L575) 
+##### [platform_version](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L340) 
+
+> def platform_version
+
+Return the platform version as an array of integers
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array<Integer>] 
+
+--
+
+##### [appium_client_version](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L353) 
 
 > def appium_client_version
 
 Returns the client's version info
 
-```ruby
-{
-    "version" => "9.1.1"
-}
-```
-
 __Returns:__
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] 
 
 --
 
-##### [absolute_app_path](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L587) 
+##### [absolute_app_path](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L365) 
 
 > def self.absolute_app_path(opts)
 
@@ -483,7 +499,7 @@ __Returns:__
 
 --
 
-##### [server_url](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L620) 
+##### [server_url](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L398) 
 
 > def server_url
 
@@ -495,7 +511,7 @@ __Returns:__
 
 --
 
-##### [restart](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L631) 
+##### [restart](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L406) 
 
 > def restart
 
@@ -507,13 +523,11 @@ __Returns:__
 
 --
 
-##### [screenshot](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L642) 
+##### [screenshot](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L419) 
 
 > def screenshot(png_save_path)
 
 Takes a png screenshot and saves to the target path.
-
-Example: screenshot '/tmp/hi.png'
 
 __Parameters:__
 
@@ -521,11 +535,29 @@ __Parameters:__
 
 __Returns:__
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[nil] 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[File] 
 
 --
 
-##### [driver_quit](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L649) 
+##### [element_screenshot](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L433) 
+
+> def element_screenshot(element, png_save_path)
+
+Takes a png screenshot of particular element's area
+
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] element - Element take a screenshot
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] png_save_path - the full path to save the png
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[File] 
+
+--
+
+##### [driver_quit](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L440) 
 
 > def driver_quit
 
@@ -537,12 +569,11 @@ __Returns:__
 
 --
 
-##### [quit_driver](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L657) 
+##### [quit_driver](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L443) 
 
 > def driver_quit
 
 Quits the driver
-Alias for driver_quit
 
 __Returns:__
 
@@ -550,12 +581,27 @@ __Returns:__
 
 --
 
-##### [start_driver](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L685) 
+##### [window_size](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L454) 
 
-> def start_driver(http_client_ops = { http_client: nil, open_timeout: 999_999, read_timeout: 999_999 })
+> def window_size
+
+Get the device window's size.
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Selenium::WebDriver::Dimension] 
+
+--
+
+##### [start_driver](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L486) 
+
+> def start_driver(http_client_ops =
 
 Creates a new global driver and quits the old one if it exists.
 You can customise http_client as the following
+
+Read http://www.rubydoc.info/github/appium/ruby_lib_core/Appium/Core/Device to understand more what the driver
+can call instance methods.
 
 __Parameters:__
 
@@ -567,7 +613,7 @@ __Returns:__
 
 --
 
-##### [set_implicit_wait](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L725) 
+##### [set_implicit_wait](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L508) 
 
 > def set_implicit_wait(wait)
 
@@ -575,7 +621,7 @@ To ignore error for Espresso Driver
 
 --
 
-##### [no_wait](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L735) 
+##### [no_wait](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L518) 
 
 > def no_wait
 
@@ -583,17 +629,11 @@ Set implicit wait to zero.
 
 --
 
-##### [set_wait](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L749) 
+##### [set_wait](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L532) 
 
 > def set_wait(timeout = nil)
 
-Set implicit wait. Default to @default_wait.
-
-```ruby
-set_wait 2
-set_wait # @default_wait
-
-```
+Set implicit wait. Default to @core.default_wait.
 
 __Parameters:__
 
@@ -605,9 +645,9 @@ __Returns:__
 
 --
 
-##### [exists](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L766) 
+##### [exists](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L549) 
 
-> def exists(pre_check = 0, post_check = @default_wait)
+> def exists(pre_check = 0, post_check = @core.default_wait)
 
 Returns existence of element.
 
@@ -629,7 +669,7 @@ __Returns:__
 
 --
 
-##### [execute_script](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L790) 
+##### [execute_script](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L573) 
 
 > def execute_script(script, *args)
 
@@ -647,19 +687,13 @@ __Returns:__
 
 --
 
-##### [find_elements](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L812) 
+##### [find_elements](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L595) 
 
 > def find_elements(*args)
 
 Calls @driver.find_elements_with_appium
 
-```
-```
-
 If you call `Appium.promote_appium_methods`, you can call `find_elements` directly.
-
-```
-```
 
 If you call `Appium.promote_appium_methods`, you can call `find_elements` directly.
 
@@ -673,14 +707,11 @@ __Returns:__
 
 --
 
-##### [find_element](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L827) 
+##### [find_element](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L610) 
 
 > def find_element(*args)
 
 Calls @driver.find_element
-
-```
-```
 
 If you call `Appium.promote_appium_methods`, you can call `find_element` directly.
 
@@ -694,7 +725,7 @@ __Returns:__
 
 --
 
-##### [set_location](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L840) 
+##### [set_location](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L623) 
 
 > def set_location(opts = {})
 
@@ -710,7 +741,7 @@ __Returns:__
 
 --
 
-##### [x](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L850) 
+##### [x](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/driver.rb#L633) 
 
 > def x
 
@@ -723,897 +754,99 @@ __Returns:__
 
 --
 
-##### [write_session_id](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L857) 
+##### [username](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/sauce_labs.rb#L4) 
 
-> def write_session_id(session_id)
+> def username
 
-
-
---
-
-##### [set_automation_name_if_nil](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/driver.rb#L866) 
-
-> def set_automation_name_if_nil
-
-If "automationName" is set only server side, this method set "automationName" attribute into @automation_name.
-Since @automation_name is set only client side before start_driver is called.
+Username for use on Sauce Labs. Set `false` to disable Sauce, even when SAUCE_USERNAME is in ENV.
 
 --
 
-##### [logger=](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/logger.rb#L18) 
+##### [access_key](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/sauce_labs.rb#L6) 
 
-> def logger=(value)
+> def access_key
 
-Sets the attribute logger
+Access Key for use on Sauce Labs. Set `false` to disable Sauce, even when SAUCE_ACCESS_KEY is in ENV.
+
+--
+
+##### [endpoint](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/sauce_labs.rb#L8) 
+
+> def endpoint
+
+Override the Sauce Appium endpoint to allow e.g. TestObject tests. Default is 'ondemand.saucelabs.com:443/wd/hub'.
+
+--
+
+##### [initialize](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/sauce_labs.rb#L33) 
+
+> def initialize(appium_lib_opts)
+
+Create a SauceLabs instance to manage sauce labs related attributes.
 
 __Parameters:__
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value - the value to set the attribute logger to.
-
---
-
-##### [logger](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/logger.rb#L22) 
-
-> def logger
-
-
-
---
-
-##### [init_caps_for_appium](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/capabilities.rb#L8) 
-
-> def self.init_caps_for_appium(opts_caps = {})
-
-
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] opts_caps - Capabilities for Appium server. All capability keys are converted to lowerCamelCase when
-this client sends capabilities to Appium server as JSON format.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] appium_lib_opts - Appium library parameter
 
 __Returns:__
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[::Selenium::WebDriver::Remote::W3C::Capabilities] Return instance of Appium::Driver::Capabilities
-inherited ::Selenium::WebDriver::Remote::W3C::Capabilities
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Appium::SauceLabs] 
 
 --
 
-##### [app_strings](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L7) 
+##### [sauce_server_url?](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/sauce_labs.rb#L53) 
 
-> def app_strings
+> def sauce_server_url?
 
-Return the hash of all localization strings.
-```ruby
-app_strings #=> "TransitionsTitle"=>"Transitions", "WebTitle"=>"Web"
-```
-
---
-
-##### [background_app](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L13) 
-
-> def background_app
-
-Backgrounds the app for a set number of seconds.
-This is a blocking application
-
---
-
-##### [current_activity](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L24) 
-
-> def current_activity
-
-Get current activity name
-```ruby
-current_activity # '.ApiDemos'
-```
+Return true if an instance of Appium::SauceLabs has sauce_username and sauce_access_key.
 
 __Returns:__
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] An activity name
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Boolean] 
 
 --
 
-##### [current_package](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L32) 
+##### [server_url](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/sauce_labs.rb#L66) 
 
-> def current_package
+> def server_url
 
-Get current package name
-```ruby
-current_package # 'com.example.android.apis'
-```
+Return a particular server url to access to. Default is the local address.
 
 __Returns:__
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] A package name
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] 
 
 --
 
-##### [get_system_bars](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L40) 
+##### [get_log](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/log.rb#L11) 
 
-> def get_system_bars
+> def get_log(type)
 
-Get system bar's information
-```ruby
-get_system_bars
-```
+
+
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String|Hash] type - You can get particular type's logs.
 
 __Returns:__
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] System bar
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[Selenium::WebDriver::LogEntry]] A list of logs data.
 
 --
 
-##### [get_display_density](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L48) 
+##### [get_available_log_types](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/log.rb#L23) 
 
-> def get_display_density
+> def get_available_log_types
 
-Get connected device's density.
-```ruby
-get_display_density # 320
-```
+Get a list of available log types
 
 __Returns:__
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Integer] The size of density
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[String]] A list of available log types.
 
 --
 
-##### [is_keyboard_shown](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L56) 
-
-> def is_keyboard_shown
-
-Get whether keyboard is displayed or not.
-```ruby
-is_keyboard_shown # false
-```
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Bool] Return true if keyboard is shown. Return false if keyboard is hidden.
-
---
-
-##### [launch_app](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L64) 
-
-> def launch_app
-
-Start the simulator and application configured with desired capabilities
-
---
-
-##### [reset](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L67) 
-
-> def reset
-
-Reset the device, relaunching the application.
-
---
-
-##### [shake](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L70) 
-
-> def shake
-
-Cause the device to shake
-
---
-
-##### [toggle_flight_mode](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L73) 
-
-> def toggle_flight_mode
-
-Toggle flight mode on or off
-
---
-
-##### [device_locked?](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L76) 
-
-> def device_locked?
-
-
-
---
-
-##### [hide_keyboard](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L78) 
-
-> def hide_keyboard
-
-Hide the onscreen keyboard
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] close_key - The name of the key which closes the keyboard.
-Defaults to 'Done' for iOS(except for XCUITest).
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Symbol] strategy - The symbol of the strategy which closes the keyboard.
-XCUITest ignore this argument.
-Default for iOS is `:pressKey`. Default for Android is `:tapOutside`.
-
---
-
-##### [press_keycode](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L91) 
-
-> def press_keycode
-
-Press keycode on the device.
-http://developer.android.com/reference/android/view/KeyEvent.html
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[integer] key - The key to press.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] metastate - The state the metakeys should be in when pressing the key.
-
---
-
-##### [long_press_keycode](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L97) 
-
-> def long_press_keycode
-
-Long press keycode on the device.
-http://developer.android.com/reference/android/view/KeyEvent.html
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[integer] key - The key to long press.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] metastate - The state the metakeys should be in when long pressing the key.
-
---
-
-##### [push_file](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L103) 
-
-> def push_file
-
-Place a file in a specific location on the device.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] path - The absolute path on the device to store data at.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] data - Raw file data to be sent to the device.
-
---
-
-##### [pull_file](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L108) 
-
-> def pull_file
-
-Retrieve a file from the device.  This can retrieve an absolute path or
-a path relative to the installed app (iOS only).
-```ruby
-pull_file '/local/data/some/path' #=> Get the file at that path
-pull_file 'Shenanigans.app/some/file' #=> Get 'some/file' from the install location of Shenanigans.app
-```
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] path - Either an absolute path OR, for iOS devices, a path relative to the app, as described.
-
---
-
-##### [pull_folder](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L118) 
-
-> def pull_folder
-
-Retrieve a folder from the device.
-```ruby
-pull_folder '/data/local/tmp' #=> Get the folder at that path
-```
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] path - absolute path to the folder
-
---
-
-##### [touch_id](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L126) 
-
-> def touch_id
-
-iOS only;  Simulate Touch ID with either valid (match == true) or invalid (match == false) fingerprint.
-```ruby
-touch_id true #=> Simulate valid fingerprint
-touch_id false #=> Simulate invalid fingerprint
-```
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Boolean] match - fingerprint validity
-Defaults to true.
-
---
-
-##### [toggle_touch_id_enrollment](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L135) 
-
-> def toggle_touch_id_enrollment
-
-iOS Simulator only:  Toggle touch id enrollment on an iOS Simulator.
-
---
-
-##### [end_coverage](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L138) 
-
-> def end_coverage
-
-Android only;  Ends the test coverage and writes the results to the given path on device.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] path - Path on the device to write too.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] intent - Intent to broadcast when ending coverage.
-
---
-
-##### [get_settings](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L143) 
-
-> def get_settings
-
-Get appium Settings for current test session
-
---
-
-##### [update_settings](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L146) 
-
-> def update_settings
-
-Update appium Settings for current test session
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] settings - Settings to update, keys are settings, values to value to set each setting to
-
---
-
-##### [start_activity](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L150) 
-
-> def start_activity
-
-Start a new activity within the current app or launch a new app and start the target activity.
-
-Android only.
-```ruby
-start_activity app_package: 'io.appium.android.apis',
-  app_activity: '.accessibility.AccessibilityNodeProviderActivity'
-```
-
---
-
-##### [get_network_connection](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L164) 
-
-> def get_network_connection
-
-Get the device network connection current status
-See set_network_connection method for return value
-
---
-
-##### [set_network_connection](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L168) 
-
-> def set_network_connection
-
-Set the device network connection mode
-Value (Alias)      | Data | Wifi | Airplane Mode
--------------------------------------------------
-1 (Airplane Mode)  | 0    | 0    | 1
-6 (All network on) | 1    | 1    | 0
-4 (Data only)      | 1    | 0    | 0
-2 (Wifi only)      | 0    | 1    | 0
-0 (None)           | 0    | 0    | 0
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] path - Bit mask that represent the network mode
-
---
-
-##### [set_immediate_value](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L181) 
-
-> def set_immediate_value
-
-Set the value to element directly
-for iOS; setValue is called in XCUITest instead because XCUITest doesn't provide set value directly.
-https://github.com/appium/appium-xcuitest-driver/blob/793cdc7d5e84bd553e375076e1c6dc7e242c9cde/lib/commands/element.js#L123
-
-```ruby
-set_immediate_value element, 'hello'
-```
-
---
-
-##### [get_performance_data_types](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L190) 
-
-> def get_performance_data_types
-
-Get the information type of the system state which is supported to read such as
-cpu, memory, network, battery via adb commands.
-https://github.com/appium/appium-base-driver/blob/be29aec2318316d12b5c3295e924a5ba8f09b0fb/lib/mjsonwp/routes.js#L300
-
-```ruby
-get_performance_data_types #=> ["cpuinfo", "batteryinfo", "networkinfo", "memoryinfo"]
-```
-
---
-
-##### [extend_search_contexts](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L443) 
-
-> def extend_search_contexts
-
-
-
---
-
-##### [find_element_with_appium](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L443) 
-
-> def find_element_with_appium
-
-
-
---
-
-##### [find_elements_with_appium](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L443) 
-
-> def find_elements_with_appium
-
-find_element/s_with_appium with their accessibility_id
-
-```ruby
- find_elements :accessibility_id, 'Animation'
-```
-
---
-
-##### [add_touch_actions](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L474) 
-
-> def add_touch_actions
-
-
-
---
-
-##### [add_ime_actions](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L497) 
-
-> def add_ime_actions
-
-
-
---
-
-##### [set_context](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L572) 
-
-> def set_context
-
-Change the context to the given context.
-```ruby
-set_context "NATIVE_APP"
-```
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] The - context to change to
-
---
-
-##### [current_context](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L580) 
-
-> def current_context
-
-
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] The context currently being used.
-
---
-
-##### [available_contexts](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L583) 
-
-> def available_contexts
-
-
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array<String>] All usable contexts, as an array of strings.
-
---
-
-##### [within_context](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L594) 
-
-> def within_context(context)
-
-Perform a block within the given context, then switch back to the starting context.
-```ruby
-result = within_context('NATIVE_APP') do
-  find_element :tag, "button"
-end # The result of `find_element :tag, "button"`
-```
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] context - The context to switch to for the duration of the block.
-
---
-
-##### [switch_to_default_context](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/device.rb#L607) 
-
-> def switch_to_default_context
-
-Change to the default context.  This is equivalent to `set_context nil`.
-
---
-
-##### [pinch](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L53) 
-
-> def pinch(percentage = 25, auto_perform = true, driver = $driver)
-
-Convenience method for pinching the screen.
-Places two fingers at the edges of the screen and brings them together.
-```ruby
-pinch 75 #=> Pinch the screen from the top right and bottom left corners
-```
-
-Without auto_perform
-
-```ruby
-action = pinch 75, false #=> Pinch the screen from the top right and bottom left corners
-action.perform    #=> to 25% of its size.
-```
-
-With driver
-
-```ruby
-driver =  Appium::Driver.new(opts, false).start_driver
-pinch 75, true, driver #=> Pinch the screen from the top right and bottom left corners
-```
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int] percentage - The percent size by which to shrink the screen when pinched.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[boolean] auto_perform - Whether to perform the action immediately (default true)
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Driver] driver - Set a driver to conduct the action. DEfault is global driver($driver)
-
---
-
-##### [zoom](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L96) 
-
-> def zoom(percentage = 200, auto_perform = true, driver = $driver)
-
-Convenience method for zooming the screen.
-Places two fingers at the edges of the screen and brings them together.
-```ruby
-action = zoom 200 #=> Zoom in the screen from the center until it doubles in size.
-```
-
-Without auto_perform
-
-```ruby
-action = zoom 200, false #=> Zoom in the screen from the center until it doubles in size.
-action.perform    #=> to 25% of its size.
-```
-
-With driver
-
-```ruby
-driver =  Appium::Driver.new(opts, false).start_driver
-pinch 200, true, driver #=> Zoom in the screen from the center until it doubles in size.
-```
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int] percentage - The percent size by which to shrink the screen when pinched.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[boolean] auto_perform - Whether to perform the action immediately (default true)
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Driver] driver - Set a driver to conduct the action. DEfault is global driver($driver)
-
---
-
-##### [pinch_for_xcuitest](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L118) 
-
-> def pinch_for_xcuitest(rate, driver)
-
-
-
---
-
-##### [pinch_android](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L133) 
-
-> def pinch_android(rate)
-
-
-
---
-
-##### [pinch_ios](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L147) 
-
-> def pinch_ios(rate)
-
-
-
---
-
-##### [zoom_for_xcuitest](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L161) 
-
-> def zoom_for_xcuitest(rate, driver)
-
-
-
---
-
-##### [zoom_android](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L176) 
-
-> def zoom_android(rate)
-
-
-
---
-
-##### [zoom_ios](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L190) 
-
-> def zoom_ios(rate)
-
-
-
---
-
-##### [actions](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L205) 
-
-> def actions
-
-self
-
---
-
-##### [driver](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L205) 
-
-> def driver
-
-self
-
---
-
-##### [initialize](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L208) 
-
-> def initialize(driver = $driver)
-
-Create a new multi-action with Driver
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[MultiTouch] a new instance of MultiTouch
-
---
-
-##### [add](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L215) 
-
-> def add(chain)
-
-Add a touch_action to be performed
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TouchAction] chain - The action to add to the chain
-
---
-
-##### [perform](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/multi_touch.rb#L220) 
-
-> def perform
-
-Ask Appium to perform the actions
-
---
-
-##### [ACTIONS](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L30) 
-
-> ACTIONS         = [:move_to, :long_press, :double_tap, :two_finger_tap, :press, :release, :tap, :wait, :perform].freeze
-
-
-
---
-
-##### [COMPLEX_ACTIONS](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L31) 
-
-> COMPLEX_ACTIONS = [:swipe].freeze
-
-
-
---
-
-##### [actions](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L45) 
-
-> def actions
-
-Returns the value of attribute actions
-
---
-
-##### [initialize](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L47) 
-
-> def initialize
-
-
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TouchAction] a new instance of TouchAction
-
---
-
-##### [move_to](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L58) 
-
-> def move_to(opts)
-
-Move to the given co-ordinates.
-
-`move_to`'s `x` and `y` have two case. One is working as coordinate, the other is working as offset.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] opts - a customizable set of options
-
---
-
-##### [long_press](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L72) 
-
-> def long_press(opts)
-
-Press down for a specific duration.
-Alternatively, you can use `press(...).wait(...).release()` instead of `long_press` if duration doesn't work well.
-https://github.com/appium/ruby_lib/issues/231#issuecomment-269895512
-e.g. Appium::TouchAction.new.press(x: 280, y: 530).wait(2000).release.perform
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] element - a customizable set of options
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] x - a customizable set of options
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] y - a customizable set of options
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] duration - a customizable set of options
-
---
-
-##### [press](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L84) 
-
-> def press(opts)
-
-Press a finger onto the screen.  Finger will stay down until you call
-`release`.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] opts - a customizable set of options
-
---
-
-##### [release](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L95) 
-
-> def release(opts = nil)
-
-Remove a finger from the screen.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] opts - a customizable set of options
-
---
-
-##### [tap](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L107) 
-
-> def tap(opts)
-
-Touch a point on the screen.
-Alternatively, you can use `press(...).release.perform` instead of `tap(...).perform`.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] opts - a customizable set of options
-
---
-
-##### [double_tap](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L120) 
-
-> def double_tap(opts)
-
-Double tap an element on the screen
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] opts - a customizable set of options
-
---
-
-##### [two_finger_tap](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L131) 
-
-> def two_finger_tap(opts)
-
-Two finger tap an element on the screen
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] opts - a customizable set of options
-
---
-
-##### [wait](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L139) 
-
-> def wait(milliseconds)
-
-Pause for a number of milliseconds before the next action
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[integer] milliseconds - Number of milliseconds to pause for
-
---
-
-##### [swipe](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L162) 
-
-> def swipe(opts, ele = nil)
-
-Convenience method to peform a swipe.
-
-Note that iOS 7 simulators have broken swipe.
-
-For iOS: Use `offset_x` and `offset_y` to define the end point.
-
-For Android: Use `end_x` and `end_y` to define the end point.
-
-If you'd like more details, please read tests and its log samples in
-`ios_tests/lib/ios/specs/device/touch_actions.rb` and `ios_tests/lib/ios/specs/device/touch_actions.rb`
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Hash] opts - a customizable set of options
-
---
-
-##### [perform](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L187) 
-
-> def perform(driver = $driver)
-
-Ask the driver to perform all actions in this action chain.
-
---
-
-##### [cancel](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L194) 
-
-> def cancel(driver = $driver)
-
-Does nothing, currently.
-
---
-
-##### [swipe_coordinates](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L201) 
-
-> def swipe_coordinates(end_x: nil, end_y: nil, offset_x: nil, offset_y: nil, driver: $driver)
-
-Visible for testing
-
---
-
-##### [chain_method](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L219) 
-
-> def chain_method(method, args = nil)
-
-
-
---
-
-##### [args_with_ele_ref](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/device/touch_actions.rb#L225) 
-
-> def args_with_ele_ref(args)
-
-
-
---
-
-##### [initialize](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/wait.rb#L4) 
+##### [initialize](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/wait.rb#L6) 
 
 > def initialize(opts = {})
 
@@ -1625,16 +858,7 @@ __Returns:__
 
 --
 
-##### [until](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/wait.rb#L23) 
-
-> def until
-
-Wait code from the selenium Ruby gem
-https://github.com/SeleniumHQ/selenium/blob/cf501dda3f0ed12233de51ce8170c0e8090f0c20/rb/lib/selenium/webdriver/common/wait.rb
-
---
-
-##### [wait_true](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/wait.rb#L73) 
+##### [wait_true](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/wait.rb#L26) 
 
 > def wait_true(opts = {})
 
@@ -1654,7 +878,7 @@ __Parameters:__
 
 --
 
-##### [wait](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/wait.rb#L96) 
+##### [wait](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/wait.rb#L43) 
 
 > def wait(opts = {})
 
@@ -1672,7 +896,15 @@ __Parameters:__
 
 --
 
-##### [ignore](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L24) 
+##### [add_touch_actions](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/device.rb#L12) 
+
+> def add_touch_actions
+
+
+
+--
+
+##### [ignore](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L16) 
 
 > def ignore
 
@@ -1680,7 +912,7 @@ Return yield and ignore any exceptions.
 
 --
 
-##### [back](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L31) 
+##### [back](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L23) 
 
 > def back
 
@@ -1692,15 +924,19 @@ __Returns:__
 
 --
 
-##### [session_id](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L36) 
+##### [session_id](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L34) 
 
 > def session_id
 
 For Sauce Labs reporting. Returns the current session id.
 
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] 
+
 --
 
-##### [xpath](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L44) 
+##### [xpath](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L42) 
 
 > def xpath(xpath_str)
 
@@ -1716,7 +952,7 @@ __Returns:__
 
 --
 
-##### [xpaths](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L52) 
+##### [xpaths](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L50) 
 
 > def xpaths(xpath_str)
 
@@ -1732,15 +968,7 @@ __Returns:__
 
 --
 
-##### [_print_source](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L56) 
-
-> def _print_source(source)
-
-
-
---
-
-##### [result](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L69) 
+##### [result](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L60) 
 
 > def result
 
@@ -1748,7 +976,7 @@ Returns the value of attribute result
 
 --
 
-##### [initialize](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L71) 
+##### [initialize](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L62) 
 
 > def initialize
 
@@ -1760,7 +988,7 @@ __Returns:__
 
 --
 
-##### [reset](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L75) 
+##### [reset](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L66) 
 
 > def reset
 
@@ -1768,7 +996,7 @@ __Returns:__
 
 --
 
-##### [start_element](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L80) 
+##### [start_element](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L71) 
 
 > def start_element(name, attrs = [], driver = $driver)
 
@@ -1776,7 +1004,7 @@ http://nokogiri.org/Nokogiri/XML/SAX/Document.html
 
 --
 
-##### [formatted_result](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L86) 
+##### [formatted_result](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L77) 
 
 > def formatted_result
 
@@ -1784,36 +1012,65 @@ http://nokogiri.org/Nokogiri/XML/SAX/Document.html
 
 --
 
-##### [get_page_class](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L97) 
+##### [get_page_class](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L96) 
 
 > def get_page_class
 
 Returns a string of class counts of visible elements.
 
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] 
+
 --
 
-##### [page_class](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L108) 
+##### [page_class](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L121) 
 
 > def page_class
 
 Count all classes on screen and print to stdout.
 Useful for appium_console.
 
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[nil] 
+
 --
 
-##### [px_to_window_rel](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L118) 
+##### [source](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L128) 
+
+> def source
+
+Prints xml of the current page
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[void] 
+
+--
+
+##### [get_source](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L135) 
+
+> def get_source
+
+Returns XML string for the current page
+Same as driver.page_source
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] 
+
+--
+
+##### [px_to_window_rel](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L145) 
 
 > def px_to_window_rel(opts = {}, driver = $driver)
 
 Converts pixel values to window relative values
 
-```ruby
-px_to_window_rel x: 50, y: 150
-```
-
 --
 
-##### [xml_keys](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L137) 
+##### [xml_keys](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L164) 
 
 > def xml_keys(target)
 
@@ -1829,7 +1086,7 @@ __Returns:__
 
 --
 
-##### [xml_values](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L145) 
+##### [xml_values](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L172) 
 
 > def xml_values(target)
 
@@ -1845,7 +1102,7 @@ __Returns:__
 
 --
 
-##### [resolve_id](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L153) 
+##### [resolve_id](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L180) 
 
 > def resolve_id(id)
 
@@ -1861,7 +1118,7 @@ __Returns:__
 
 --
 
-##### [filter](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L159) 
+##### [filter](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L187) 
 
 > def filter
 
@@ -1869,7 +1126,7 @@ Returns the value of attribute filter
 
 --
 
-##### [filter=](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L162) 
+##### [filter=](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L190) 
 
 > def filter=(value)
 
@@ -1877,7 +1134,7 @@ convert to string to support symbols
 
 --
 
-##### [initialize](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L168) 
+##### [initialize](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L196) 
 
 > def initialize
 
@@ -1889,7 +1146,7 @@ __Returns:__
 
 --
 
-##### [reset](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L173) 
+##### [reset](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L201) 
 
 > def reset
 
@@ -1897,7 +1154,7 @@ __Returns:__
 
 --
 
-##### [result](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L179) 
+##### [result](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L207) 
 
 > def result
 
@@ -1905,7 +1162,7 @@ __Returns:__
 
 --
 
-##### [start_element](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L195) 
+##### [start_element](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L223) 
 
 > def start_element(name, attrs = [])
 
@@ -1913,7 +1170,7 @@ __Returns:__
 
 --
 
-##### [end_element](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L204) 
+##### [end_element](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L232) 
 
 > def end_element(name)
 
@@ -1921,7 +1178,7 @@ __Returns:__
 
 --
 
-##### [characters](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/helper.rb#L210) 
+##### [characters](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/helper.rb#L238) 
 
 > def characters(chars)
 
@@ -1929,55 +1186,201 @@ __Returns:__
 
 --
 
-##### [COMMAND_NO_ARG](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/command.rb#L4) 
+##### [DEFAULT_HEADERS](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/http_client.rb#L8) 
 
-> COMMAND_NO_ARG = {
+> DEFAULT_HEADERS = { 'Accept' => CONTENT_TYPE, 'User-Agent' => "appium/ruby_lib/#{::Appium::VERSION}" }.freeze
+
+Default HTTP client inherit Appium::Core::Base::Http::Default, but has different DEFAULT_HEADERS
+
+--
+
+##### [pinch](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/multi_touch.rb#L51) 
+
+> def pinch(percentage = 25, auto_perform = true, driver = $driver)
+
+Convenience method for pinching the screen.
+Places two fingers at the edges of the screen and brings them together.
+Without auto_perform
+
+With driver
+
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int] percentage - The percent size by which to shrink the screen when pinched.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[boolean] auto_perform - Whether to perform the action immediately (default true)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Driver] driver - Set a driver to conduct the action. DEfault is global driver($driver)
+
+--
+
+##### [zoom](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/multi_touch.rb#L95) 
+
+> def zoom(percentage = 200, auto_perform = true, driver = $driver)
+
+Convenience method for zooming the screen.
+Places two fingers at the edges of the screen and brings them together.
+Without auto_perform
+
+With driver
+
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int] percentage - The percent size by which to shrink the screen when pinched.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[boolean] auto_perform - Whether to perform the action immediately (default true)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Driver] driver - Set a driver to conduct the action. DEfault is global driver($driver)
+
+--
+
+##### [initialize](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/multi_touch.rb#L216) 
+
+> def initialize(driver = $driver)
+
+self
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[MultiTouch] a new instance of MultiTouch
+
+--
+
+##### [COMPLEX_ACTIONS](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/touch_actions.rb#L33) 
+
+> COMPLEX_ACTIONS = ::Appium::Core::TouchAction::COMPLEX_ACTIONS
 
 
 
 --
 
-##### [COMMAND](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/command.rb#L28) 
+##### [initialize](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/touch_actions.rb#L47) 
 
-> COMMAND = {
+> def initialize(driver = $driver)
+
+
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TouchAction] a new instance of TouchAction
+
+--
+
+##### [swipe](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/common/touch_actions.rb#L51) 
+
+> def swipe(opts, ele = nil)
 
 
 
 --
 
-##### [COMMANDS_EXTEND_OSS](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/command.rb#L66) 
+##### [for](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/android.rb#L19) android
 
-> COMMANDS_EXTEND_OSS = COMMAND.merge(::Selenium::WebDriver::Remote::OSS::Bridge::COMMANDS).freeze
-
-
-
---
-
-##### [COMMANDS_EXTEND_W3C](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/command.rb#L67) 
-
-> COMMANDS_EXTEND_W3C = COMMAND.merge(::Selenium::WebDriver::Remote::W3C::Bridge::COMMANDS).freeze
+> def self.for(target)
 
 
 
 --
 
-##### [window_size](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/element/window.rb#L5) 
+##### [TextView](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/text.rb#L4) android
 
-> def window_size
+> TextView = 'android.widget.TextView'.freeze
 
-Get the window's size
 
---
-
-##### [FINDERS](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/search_context.rb#L5) 
-
-> FINDERS = {
-
-rubocop:disable Style/MutableConstant
 
 --
 
-##### [result](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L6) android
+##### [text](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/text.rb#L10) android
+
+> def text(value)
+
+Find the first TextView that contains value or by index.
+If int then the TextView at that index is returned.
+
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String, Integer] value - the value to find.
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TextView] 
+
+--
+
+##### [texts](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/text.rb#L19) android
+
+> def texts(value = false)
+
+Find all TextViews containing value.
+If value is omitted, all texts are returned.
+
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] value - the value to search for
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array<TextView>] 
+
+--
+
+##### [first_text](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/text.rb#L26) android
+
+> def first_text
+
+Find the first TextView.
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TextView] 
+
+--
+
+##### [last_text](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/text.rb#L32) android
+
+> def last_text
+
+Find the last TextView.
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TextView] 
+
+--
+
+##### [text_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/text.rb#L39) android
+
+> def text_exact(value)
+
+Find the first TextView that exactly matches value.
+
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] value - the value to match exactly
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TextView] 
+
+--
+
+##### [texts_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/text.rb#L46) android
+
+> def texts_exact(value)
+
+Find all TextViews that exactly match value.
+
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] value - the value to match exactly
+
+__Returns:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array<TextView>] 
+
+--
+
+##### [result](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L6) android
 
 > def result
 
@@ -1985,7 +1388,7 @@ Returns the value of attribute result
 
 --
 
-##### [keys](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L6) android
+##### [keys](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L6) android
 
 > def keys
 
@@ -1993,7 +1396,7 @@ Returns the value of attribute keys
 
 --
 
-##### [filter](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L6) android
+##### [filter](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L6) android
 
 > def filter
 
@@ -2001,7 +1404,7 @@ Returns the value of attribute filter
 
 --
 
-##### [filter=](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L9) android
+##### [filter=](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L9) android
 
 > def filter=(value)
 
@@ -2009,7 +1412,7 @@ convert to string to support symbols
 
 --
 
-##### [initialize](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L15) android
+##### [initialize](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L15) android
 
 > def initialize
 
@@ -2021,7 +1424,7 @@ __Returns:__
 
 --
 
-##### [reset](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L20) android
+##### [reset](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L20) android
 
 > def reset
 
@@ -2029,7 +1432,7 @@ __Returns:__
 
 --
 
-##### [start_element](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L26) android
+##### [start_element](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L26) android
 
 > def start_element(name, attrs = [], driver = $driver)
 
@@ -2037,19 +1440,7 @@ http://nokogiri.org/Nokogiri/XML/SAX/Document.html
 
 --
 
-##### [source](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L76) android
-
-> def source
-
-Prints xml of the current page
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[void] 
-
---
-
-##### [get_android_inspect](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L86) android
+##### [get_android_inspect](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L80) android
 
 > def get_android_inspect(class_name = false)
 
@@ -2068,7 +1459,7 @@ __Returns:__
 
 --
 
-##### [page](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L112) android
+##### [page](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L106) android
 
 > def page(opts = {})
 
@@ -2087,17 +1478,7 @@ __Returns:__
 
 --
 
-##### [current_app](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L124) android
-
-> def current_app
-
-example line:
-"mFocusedApp=AppWindowToken{b1420058 token=Token{b128add0
- ActivityRecord{b1264d10 u0 com.example.android.apis/.ApiDemos t23}}}"
-
---
-
-##### [id](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L148) android
+##### [id](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L115) android
 
 > def id(id)
 
@@ -2113,7 +1494,7 @@ __Returns:__
 
 --
 
-##### [ids](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L156) android
+##### [ids](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L123) android
 
 > def ids(id)
 
@@ -2129,7 +1510,7 @@ __Returns:__
 
 --
 
-##### [ele_index](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L165) android
+##### [ele_index](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L132) android
 
 > def ele_index(class_name, index)
 
@@ -2147,7 +1528,7 @@ __Returns:__
 
 --
 
-##### [first_ele](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L183) android
+##### [first_ele](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L150) android
 
 > def first_ele(class_name)
 
@@ -2163,7 +1544,7 @@ __Returns:__
 
 --
 
-##### [last_ele](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L190) android
+##### [last_ele](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L157) android
 
 > def last_ele(class_name)
 
@@ -2179,7 +1560,7 @@ __Returns:__
 
 --
 
-##### [tag](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L198) android
+##### [tag](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L165) android
 
 > def tag(class_name)
 
@@ -2195,7 +1576,7 @@ __Returns:__
 
 --
 
-##### [tags](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L206) android
+##### [tags](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L173) android
 
 > def tags(class_name)
 
@@ -2211,7 +1592,7 @@ __Returns:__
 
 --
 
-##### [string_visible_contains_xpath](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L249) android
+##### [string_visible_contains_xpath](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L216) android
 
 > def string_visible_contains_xpath(class_name, value)
 
@@ -2232,7 +1613,7 @@ __Returns:__
 
 --
 
-##### [string_visible_contains](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L269) android
+##### [string_visible_contains](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L236) android
 
 > def string_visible_contains(class_name, value)
 
@@ -2253,7 +1634,7 @@ __Returns:__
 
 --
 
-##### [complex_find_contains](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L287) android
+##### [complex_find_contains](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L254) android
 
 > def complex_find_contains(class_name, value)
 
@@ -2271,7 +1652,7 @@ __Returns:__
 
 --
 
-##### [complex_finds_contains](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L295) android
+##### [complex_finds_contains](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L262) android
 
 > def complex_finds_contains(class_name, value)
 
@@ -2289,7 +1670,7 @@ __Returns:__
 
 --
 
-##### [complex_find_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L339) android
+##### [complex_find_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L306) android
 
 > def complex_find_exact(class_name, value)
 
@@ -2307,7 +1688,7 @@ __Returns:__
 
 --
 
-##### [complex_finds_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L347) android
+##### [complex_finds_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/helper.rb#L314) android
 
 > def complex_finds_exact(class_name, value)
 
@@ -2325,149 +1706,7 @@ __Returns:__
 
 --
 
-##### [get_source](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/helper.rb#L353) android
-
-> def get_source
-
-Returns XML string for the current page via `page_source`
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] 
-
---
-
-##### [_nodeset_to_uiselector](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/client_xpath.rb#L5) android
-
-> def _nodeset_to_uiselector(opts = {})
-
-
-
---
-
-##### [_client_xpath](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/client_xpath.rb#L20) android
-
-> def _client_xpath(opts = {})
-
-
-
---
-
-##### [client_xpath](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/client_xpath.rb#L37) android
-
-> def client_xpath(xpath)
-
-
-
---
-
-##### [client_xpaths](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/client_xpath.rb#L43) android
-
-> def client_xpaths(xpath)
-
-
-
---
-
-##### [TextView](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/text.rb#L4) android
-
-> TextView = 'android.widget.TextView'.freeze
-
-
-
---
-
-##### [text](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/text.rb#L10) android
-
-> def text(value)
-
-Find the first TextView that contains value or by index.
-If int then the TextView at that index is returned.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String, Integer] value - the value to find.
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TextView] 
-
---
-
-##### [texts](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/text.rb#L19) android
-
-> def texts(value = false)
-
-Find all TextViews containing value.
-If value is omitted, all texts are returned.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] value - the value to search for
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array<TextView>] 
-
---
-
-##### [first_text](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/text.rb#L26) android
-
-> def first_text
-
-Find the first TextView.
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TextView] 
-
---
-
-##### [last_text](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/text.rb#L32) android
-
-> def last_text
-
-Find the last TextView.
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TextView] 
-
---
-
-##### [text_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/text.rb#L39) android
-
-> def text_exact(value)
-
-Find the first TextView that exactly matches value.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] value - the value to match exactly
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TextView] 
-
---
-
-##### [texts_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/text.rb#L46) android
-
-> def texts_exact(value)
-
-Find all TextViews that exactly match value.
-
-__Parameters:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] value - the value to match exactly
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array<TextView>] 
-
---
-
-##### [alert_click](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/alert.rb#L6) android
+##### [alert_click](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/alert.rb#L6) android
 
 > def alert_click(value)
 
@@ -2483,7 +1722,7 @@ __Returns:__
 
 --
 
-##### [alert_accept](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/alert.rb#L13) android
+##### [alert_accept](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/alert.rb#L13) android
 
 > def alert_accept
 
@@ -2496,7 +1735,7 @@ __Returns:__
 
 --
 
-##### [alert_accept_text](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/alert.rb#L20) android
+##### [alert_accept_text](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/alert.rb#L20) android
 
 > def alert_accept_text
 
@@ -2509,7 +1748,7 @@ __Returns:__
 
 --
 
-##### [alert_dismiss](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/alert.rb#L27) android
+##### [alert_dismiss](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/alert.rb#L27) android
 
 > def alert_dismiss
 
@@ -2522,7 +1761,7 @@ __Returns:__
 
 --
 
-##### [alert_dismiss_text](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/alert.rb#L34) android
+##### [alert_dismiss_text](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/alert.rb#L34) android
 
 > def alert_dismiss_text
 
@@ -2535,7 +1774,7 @@ __Returns:__
 
 --
 
-##### [Button](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/button.rb#L3) android
+##### [Button](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/button.rb#L3) android
 
 > Button      = 'android.widget.Button'.freeze
 
@@ -2543,7 +1782,7 @@ __Returns:__
 
 --
 
-##### [ImageButton](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/button.rb#L4) android
+##### [ImageButton](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/button.rb#L4) android
 
 > ImageButton = 'android.widget.ImageButton'.freeze
 
@@ -2551,7 +1790,7 @@ __Returns:__
 
 --
 
-##### [button](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/button.rb#L10) android
+##### [button](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/button.rb#L10) android
 
 > def button(value)
 
@@ -2568,7 +1807,7 @@ __Returns:__
 
 --
 
-##### [buttons](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/button.rb#L27) android
+##### [buttons](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/button.rb#L27) android
 
 > def buttons(value = false)
 
@@ -2585,7 +1824,7 @@ __Returns:__
 
 --
 
-##### [first_button](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/button.rb#L34) android
+##### [first_button](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/button.rb#L34) android
 
 > def first_button
 
@@ -2597,7 +1836,7 @@ __Returns:__
 
 --
 
-##### [last_button](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/button.rb#L40) android
+##### [last_button](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/button.rb#L40) android
 
 > def last_button
 
@@ -2609,7 +1848,7 @@ __Returns:__
 
 --
 
-##### [button_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/button.rb#L56) android
+##### [button_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/button.rb#L56) android
 
 > def button_exact(value)
 
@@ -2625,7 +1864,7 @@ __Returns:__
 
 --
 
-##### [buttons_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/button.rb#L63) android
+##### [buttons_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/button.rb#L63) android
 
 > def buttons_exact(value)
 
@@ -2641,19 +1880,7 @@ __Returns:__
 
 --
 
-##### [uiautomator_find](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/mobile_methods.rb#L10) android
-
-> def uiautomator_find
-
-find_element/s can be used with a [UISelector](http://developer.android.com/tools/help/uiautomator/UiSelector.html).
-
-```ruby
- find_elements :uiautomator, 'new UiSelector().clickable(true)'
-```
-
---
-
-##### [find](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/generic.rb#L6) android
+##### [find](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/generic.rb#L6) android
 
 > def find(value)
 
@@ -2669,7 +1896,7 @@ __Returns:__
 
 --
 
-##### [finds](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/generic.rb#L13) android
+##### [finds](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/generic.rb#L13) android
 
 > def finds(value)
 
@@ -2685,7 +1912,7 @@ __Returns:__
 
 --
 
-##### [find_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/generic.rb#L20) android
+##### [find_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/generic.rb#L20) android
 
 > def find_exact(value)
 
@@ -2701,7 +1928,7 @@ __Returns:__
 
 --
 
-##### [finds_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/generic.rb#L27) android
+##### [finds_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/generic.rb#L27) android
 
 > def finds_exact(value)
 
@@ -2717,7 +1944,7 @@ __Returns:__
 
 --
 
-##### [scroll_to](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/generic.rb#L40) android
+##### [scroll_to](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/generic.rb#L40) android
 
 > def scroll_to(text, scrollable_index = 0)
 
@@ -2735,7 +1962,7 @@ __Returns:__
 
 --
 
-##### [scroll_to_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/generic.rb#L58) android
+##### [scroll_to_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/generic.rb#L58) android
 
 > def scroll_to_exact(text, scrollable_index = 0)
 
@@ -2753,7 +1980,15 @@ __Returns:__
 
 --
 
-##### [EditText](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/textfield.rb#L3) android
+##### [for](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/espresso/bridge.rb#L7) android
+
+> def self.for(target)
+
+
+
+--
+
+##### [EditText](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/textfield.rb#L3) android
 
 > EditText = 'android.widget.EditText'.freeze
 
@@ -2761,7 +1996,7 @@ __Returns:__
 
 --
 
-##### [textfield](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/textfield.rb#L9) android
+##### [textfield](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/textfield.rb#L9) android
 
 > def textfield(value)
 
@@ -2778,7 +2013,7 @@ __Returns:__
 
 --
 
-##### [textfields](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/textfield.rb#L18) android
+##### [textfields](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/textfield.rb#L18) android
 
 > def textfields(value = false)
 
@@ -2795,7 +2030,7 @@ __Returns:__
 
 --
 
-##### [first_textfield](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/textfield.rb#L25) android
+##### [first_textfield](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/textfield.rb#L25) android
 
 > def first_textfield
 
@@ -2807,7 +2042,7 @@ __Returns:__
 
 --
 
-##### [last_textfield](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/textfield.rb#L31) android
+##### [last_textfield](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/textfield.rb#L31) android
 
 > def last_textfield
 
@@ -2819,7 +2054,7 @@ __Returns:__
 
 --
 
-##### [textfield_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/textfield.rb#L38) android
+##### [textfield_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/textfield.rb#L38) android
 
 > def textfield_exact(value)
 
@@ -2835,7 +2070,7 @@ __Returns:__
 
 --
 
-##### [textfields_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/element/textfield.rb#L45) android
+##### [textfields_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/element/textfield.rb#L45) android
 
 > def textfields_exact(value)
 
@@ -2851,7 +2086,15 @@ __Returns:__
 
 --
 
-##### [string_visible_contains](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/helper.rb#L13) android
+##### [for](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/bridge.rb#L7) android
+
+> def self.for(target)
+
+
+
+--
+
+##### [string_visible_contains](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/helper.rb#L13) android
 
 > def string_visible_contains(class_name, value)
 
@@ -2872,7 +2115,7 @@ __Returns:__
 
 --
 
-##### [complex_find_contains](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/helper.rb#L31) android
+##### [complex_find_contains](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/helper.rb#L31) android
 
 > def complex_find_contains(class_name, value)
 
@@ -2890,7 +2133,7 @@ __Returns:__
 
 --
 
-##### [complex_finds_contains](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/helper.rb#L41) android
+##### [complex_finds_contains](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/helper.rb#L41) android
 
 > def complex_finds_contains(class_name, value)
 
@@ -2908,7 +2151,7 @@ __Returns:__
 
 --
 
-##### [complex_find_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/helper.rb#L69) android
+##### [complex_find_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/helper.rb#L69) android
 
 > def complex_find_exact(class_name, value)
 
@@ -2926,7 +2169,7 @@ __Returns:__
 
 --
 
-##### [complex_finds_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/helper.rb#L79) android
+##### [complex_finds_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/helper.rb#L79) android
 
 > def complex_finds_exact(class_name, value)
 
@@ -2944,7 +2187,22 @@ __Returns:__
 
 --
 
-##### [button](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/element/button.rb#L9) android
+##### [shell](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/common/command/command.rb#L14) android
+
+> def shell(command, arguments)
+
+Conduct an adb shell script on Appium server.
+Require `--relaxed-security` arguments when run Appium server as server side arguments.
+
+__Parameters:__
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String] command - Command for "adb shell"
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array] arguments - Arguments for the adb command
+
+--
+
+##### [button](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/element/button.rb#L9) android
 
 > def button(value)
 
@@ -2961,7 +2219,7 @@ __Returns:__
 
 --
 
-##### [buttons](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/element/button.rb#L29) android
+##### [buttons](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/element/button.rb#L29) android
 
 > def buttons(value = false)
 
@@ -2978,7 +2236,7 @@ __Returns:__
 
 --
 
-##### [first_button](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/element/button.rb#L36) android
+##### [first_button](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/element/button.rb#L36) android
 
 > def first_button
 
@@ -2990,7 +2248,7 @@ __Returns:__
 
 --
 
-##### [last_button](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/element/button.rb#L43) android
+##### [last_button](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/element/button.rb#L43) android
 
 > def last_button
 
@@ -3002,7 +2260,7 @@ __Returns:__
 
 --
 
-##### [button_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/element/button.rb#L60) android
+##### [button_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/element/button.rb#L60) android
 
 > def button_exact(value)
 
@@ -3018,7 +2276,7 @@ __Returns:__
 
 --
 
-##### [buttons_exact](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/android/uiautomator2/element/button.rb#L68) android
+##### [buttons_exact](https://github.com/appium/ruby_lib/blob/d2a48f235b29f5150524d2894b38df79d9cc4f52/lib/appium_lib/android/uiautomator2/element/button.rb#L68) android
 
 > def buttons_exact(value)
 
@@ -3031,58 +2289,6 @@ __Parameters:__
 __Returns:__
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array<Button>] 
-
---
-
-##### [value](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/patch.rb#L12) 
-
-> def value
-
-Returns the value attribute
-
-Fixes NoMethodError: undefined method `value' for Selenium::WebDriver::Element
-
---
-
-##### [name](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/patch.rb#L19) 
-
-> def name
-
-Returns the name attribute
-
-Fixes NoMethodError: undefined method `name' for Selenium::WebDriver::Element
-
---
-
-##### [location_rel](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/patch.rb#L30) 
-
-> def location_rel(driver = $driver)
-
-For use with mobile tap.
-
-```ruby
-execute_script 'mobile: tap', :x => 0.0, :y => 0.98
-```
-
-__Returns:__
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[OpenStruct] the relative x, y in a struct. ex: { x: 0.50, y: 0.20 }
-
---
-
-##### [DEFAULT_HEADERS](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/patch.rb#L170) 
-
-> DEFAULT_HEADERS = { 'Accept' => CONTENT_TYPE, 'User-Agent' => "appium/ruby_lib/#{::Appium::VERSION}" }.freeze
-
-
-
---
-
-##### [patch_remote_driver_commands](https://github.com/appium/ruby_lib/blob/95118d4e0a6ec285e55862ea6b6fed528711ad84/lib/appium_lib/common/patch.rb#L173) 
-
-> def patch_remote_driver_commands
-
-
 
 --
 

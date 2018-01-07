@@ -1,3 +1,81 @@
+#### v9.8.1 2017-12-17
+
+- [1081ae0](https://github.com/appium/ruby_lib/commit/1081ae01e7cf5c4682cadcf0219b07912cc3734f) [Release 9 8 1 (#731)](https://github.com/appium/ruby_lib/issues/731)
+- [8212de4](https://github.com/appium/ruby_lib/commit/8212de4037f8c0bcd0c9a5d828dec6db32ace697) [update ruby_core to fix creating session for the W3C createSession for Appium (#730)](https://github.com/appium/ruby_lib/issues/730)
+- [e12787d](https://github.com/appium/ruby_lib/commit/e12787dc1ebd35a9760e9e59e094bc30b2dfe627) [add alias (#725)](https://github.com/appium/ruby_lib/issues/725)
+- [047ed32](https://github.com/appium/ruby_lib/commit/047ed3296ce5a33a4ea9814348dc4b8af2fbebcc) [Release 9 8 0 (#724)](https://github.com/appium/ruby_lib/issues/724)
+- [9dfa0b9](https://github.com/appium/ruby_lib/commit/9dfa0b9c0c3df6f7ec88d578e304ad1fd3704742) [refactor: replace core directory to core library (#718)](https://github.com/appium/ruby_lib/issues/718)
+
+
+#### v9.7.5 2017-11-04
+
+- [1e1bb7e](https://github.com/appium/ruby_lib/commit/1e1bb7e3f1f500fa0dffe361b875b6b16941e290) [Release 9 7 5 (#717)](https://github.com/appium/ruby_lib/issues/717)
+- [6a6d07e](https://github.com/appium/ruby_lib/commit/6a6d07e80686a171f76ea4fa013996e7f81f6fb9) [fix: take care capybara case (#716)](https://github.com/appium/ruby_lib/issues/716)
+
+
+#### v9.7.4 2017-10-28
+
+- [8522f49](https://github.com/appium/ruby_lib/commit/8522f496eff2a72648a563af8ce06cb8c7270256) [Release 9 7 4 (#715)](https://github.com/appium/ruby_lib/issues/715)
+- [ad6ca97](https://github.com/appium/ruby_lib/commit/ad6ca9709351b99f547b789846be3faf62f6558f) [fix: Define source in common section (#714)](https://github.com/appium/ruby_lib/issues/714)
+- [bb80136](https://github.com/appium/ruby_lib/commit/bb80136adf909f49582ff69f2c9276669b4edf78) [remove todo (#712)](https://github.com/appium/ruby_lib/issues/712)
+- [b7a6e1d](https://github.com/appium/ruby_lib/commit/b7a6e1d3e2ed0a04de571c857f6c469ac6f24153) [refactor: Define multi touch base class (#711)](https://github.com/appium/ruby_lib/issues/711)
+- [14ff169](https://github.com/appium/ruby_lib/commit/14ff169cf91b36750d1e8cb498723884dcdc66b8) [feature: add unlock (#710)](https://github.com/appium/ruby_lib/issues/710)
+
+
+#### v9.7.3 2017-10-21
+
+- [e570a64](https://github.com/appium/ruby_lib/commit/e570a640106c57521335f837082cf00abf0d8c10) [update changelog (#709)](https://github.com/appium/ruby_lib/issues/709)
+- [f598950](https://github.com/appium/ruby_lib/commit/f5989500dabcd21cd6daaacab828942de998497a) [Release 9 7 3 (#708)](https://github.com/appium/ruby_lib/issues/708)
+- [67385e9](https://github.com/appium/ruby_lib/commit/67385e9c203c4bbd062c7bf3397fca7bbb8d636b) [refactor: Separate touch actions (#707)](https://github.com/appium/ruby_lib/issues/707)
+- [d1dd4fb](https://github.com/appium/ruby_lib/commit/d1dd4fbea8958e0b317c59fd2a5aaa0d027078e9) [refactor: set uiautomator2 by default for android (#706)](https://github.com/appium/ruby_lib/issues/706)
+- [8c92ace](https://github.com/appium/ruby_lib/commit/8c92ace7c3c27ee31714c8f3e7d2ebeb48bc07ec) [feature: Add espresso bridge (#705)](https://github.com/appium/ruby_lib/issues/705)
+- [cc4f9e7](https://github.com/appium/ruby_lib/commit/cc4f9e7f67ab66ca0f20849b3b249b99b0671783) [feature: Add espresso (#704)](https://github.com/appium/ruby_lib/issues/704)
+- [dd4ace1](https://github.com/appium/ruby_lib/commit/dd4ace10ee650e8b1e2c8bb50a4a29288a350949) [add an example for the predicate (#701)](https://github.com/appium/ruby_lib/issues/701)
+- [3ea887d](https://github.com/appium/ruby_lib/commit/3ea887d17b6c0b7235f21e3424ada65fe662df22) [feature: add get source for xcuitest (#699)](https://github.com/appium/ruby_lib/issues/699)
+- [798c3aa](https://github.com/appium/ruby_lib/commit/798c3aae8f5ec42f0286b17624e2d667e362b24c) [feature: introduce process model (#698)](https://github.com/appium/ruby_lib/issues/698)
+- [c73ed12](https://github.com/appium/ruby_lib/commit/c73ed12973efb4c4fea031810e2ca6678f363191) [refactor: make export session path manageable (#694)](https://github.com/appium/ruby_lib/issues/694)
+
+
+#### v9.7.2 2017-10-07
+
+- [1f20df4](https://github.com/appium/ruby_lib/commit/1f20df4ea663c881d10d173c2df178169f257c95) [Release 9 7 2 (#692)](https://github.com/appium/ruby_lib/issues/692)
+- [b9bb275](https://github.com/appium/ruby_lib/commit/b9bb2751313ea478ee775d979543f05dc44f9e21) [feature: add flatten_hash_keys (#688)](https://github.com/appium/ruby_lib/issues/688)
+- [3bdc1f9](https://github.com/appium/ruby_lib/commit/3bdc1f9cf6ad5eb2279dfd6cb43e35fc469720de) [fix: path for uiautomation (#690)](https://github.com/appium/ruby_lib/issues/690)
+- [3102784](https://github.com/appium/ruby_lib/commit/31027845774373e22b907242944f391ddf755581) [fix: export session (#689)](https://github.com/appium/ruby_lib/issues/689)
+
+
+#### v9.7.1 2017-10-01
+
+- [ebde85f](https://github.com/appium/ruby_lib/commit/ebde85fac616ac09e19a5f8215195e536d88344d) [Release 9 7 1 (#682)](https://github.com/appium/ruby_lib/issues/682)
+- [db29b66](https://github.com/appium/ruby_lib/commit/db29b664172935f7814266c7357e099969404fe3) [fix: Fix appium version error (#681)](https://github.com/appium/ruby_lib/issues/681)
+
+
+#### v9.7.0 2017-10-01
+
+- [bf12459](https://github.com/appium/ruby_lib/commit/bf124597977514e4d338efaaea5a29bdcbef5578) [Release 9 7 0 (#679)](https://github.com/appium/ruby_lib/issues/679)
+- [a6240cb](https://github.com/appium/ruby_lib/commit/a6240cb3144679865b9ca455a3906586268c20db) [refactor: Move window size method and touch related actions (#678)](https://github.com/appium/ruby_lib/issues/678)
+- [e3f5b0d](https://github.com/appium/ruby_lib/commit/e3f5b0d91b35d5b2b3b11e63911e2bf48ca11f08) [refactor: define bridge in core (#676)](https://github.com/appium/ruby_lib/issues/676)
+- [eb7680f](https://github.com/appium/ruby_lib/commit/eb7680f6db1e821901045beacba0a8b80de722fb) [refactor: collect no agrs in core/command (#675)](https://github.com/appium/ruby_lib/issues/675)
+- [f174e75](https://github.com/appium/ruby_lib/commit/f174e75e81912ddd5118e066349774caf54b4a74) [remove some todos which isn't need more (#673)](https://github.com/appium/ruby_lib/issues/673)
+- [8471880](https://github.com/appium/ruby_lib/commit/84718805fb4c6246692564295294073b90ada700) [refactor: separate core android ios more (#670)](https://github.com/appium/ruby_lib/issues/670)
+- [2e09e83](https://github.com/appium/ruby_lib/commit/2e09e839cce26571fb5857097d3c7f3391bfe3ff) [refactor: move some drivers in core (#669)](https://github.com/appium/ruby_lib/issues/669)
+- [35b0ded](https://github.com/appium/ruby_lib/commit/35b0dedcfc08e66e6e7a9414db645e129bf5d373) [refactor: replace extend for to bridge for in driver (#668)](https://github.com/appium/ruby_lib/issues/668)
+- [d44f00a](https://github.com/appium/ruby_lib/commit/d44f00a6cb8f52770da4ae7b7d69b8eaf3ae1581) [refactor: Reduce patch_webdriver_element and some DEPRECATIONs (#663)](https://github.com/appium/ruby_lib/issues/663)
+- [2f24cb2](https://github.com/appium/ruby_lib/commit/2f24cb2ba17becbbe0e5e96bd2e4eb672f026024) [feature: update toggle touch id enrollment (#664)](https://github.com/appium/ruby_lib/issues/664)
+- [895874d](https://github.com/appium/ruby_lib/commit/895874d51f5491db6a26669ae8e6f78c243c6eb3) [refactor: add some comments and remote_status (#662)](https://github.com/appium/ruby_lib/issues/662)
+- [e813dfe](https://github.com/appium/ruby_lib/commit/e813dfe5689c450945df41d8c1973d9d58b8b0ff) [refactor: put warn if no device matched (#658)](https://github.com/appium/ruby_lib/issues/658)
+- [d95b02e](https://github.com/appium/ruby_lib/commit/d95b02e6fa6a78525af120e0096beb3559dc6f72) [refactor: re-struct directories (#655)](https://github.com/appium/ruby_lib/issues/655)
+- [f600fe6](https://github.com/appium/ruby_lib/commit/f600fe6fbc55281c58b2593d0aa55ae93a32a913) [refactor: separate some methods and modules (#651)](https://github.com/appium/ruby_lib/issues/651)
+
+
+#### v9.6.1 2017-08-27
+
+- [a542287](https://github.com/appium/ruby_lib/commit/a5422874b4ab60430ab9d58289aac001ecd90ecf) [Release 9 6 1 (#650)](https://github.com/appium/ruby_lib/issues/650)
+- [cb9450d](https://github.com/appium/ruby_lib/commit/cb9450d207fb2e23b4dfef4318f47ea3d04c7689) [refactor: divide dependencies (#649)](https://github.com/appium/ruby_lib/issues/649)
+- [0673ad7](https://github.com/appium/ruby_lib/commit/0673ad71a0c13e72c96fa7928ce1077c3684d4c2) [feature: add commands for get_pasteboard and set_pasteboard (#648)](https://github.com/appium/ruby_lib/issues/648)
+- [420c855](https://github.com/appium/ruby_lib/commit/420c855efb27e2dd84fce8b0dbeb0e86d41f72ee) [use 1.8.0 to reduce constant ::Fixnum error (#647)](https://github.com/appium/ruby_lib/issues/647)
+
+
 #### v9.6.0 2017-08-20
 
 - [e1a2cd4](https://github.com/appium/ruby_lib/commit/e1a2cd493a370655b390a1d3803a85fbdb5f7f9d) [Release 9 6 0 (#643)](https://github.com/appium/ruby_lib/issues/643)

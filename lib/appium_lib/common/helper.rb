@@ -1,5 +1,4 @@
-# Generic helper methods not specific
-# to a particular tag name
+# Generic helper methods not specific to a particular tag name
 module Appium
   module Common
     # iOS .name returns the accessibility attribute if it's set. if not set, the string value is used.
@@ -26,6 +25,12 @@ module Appium
     end
 
     # For Sauce Labs reporting. Returns the current session id.
+    # @return [String]
+    #
+    # @example
+    #
+    #   @driver.session_id #=> "some-session-ids"
+    #
     def session_id
       @driver.session_id
     end
@@ -48,7 +53,6 @@ module Appium
 
     # json and ap are required for the source method.
     require 'json'
-    require 'ap' # awesome print
 
     # @private
     # http://nokogiri.org/Nokogiri/XML/SAX.html
@@ -81,6 +85,14 @@ module Appium
     end # class CountElements
 
     # Returns a string of class counts of visible elements.
+    # @return [String]
+    #
+    # @example
+    #
+    #   get_page_class #=> "24x XCUIElementTypeStaticText\n12x XCUIElementTypeCell\n8x XCUIElementTypeOther\n
+    #                  #    2x XCUIElementTypeWindow\n1x XCUIElementTypeStatusBar\n1x XCUIElementTypeTable\n1
+    #                  #    x XCUIElementTypeNavigationBar\n1x XCUIElementTypeApplication"
+    #
     def get_page_class
       parser = @count_elements_parser ||= Nokogiri::XML::SAX::Parser.new(CountElements.new)
 
@@ -92,16 +104,44 @@ module Appium
 
     # Count all classes on screen and print to stdout.
     # Useful for appium_console.
+    # @return [nil]
+    #
+    # @example
+    #
+    #   page_class
+    #     # 24x XCUIElementTypeStaticText
+    #     # 12x XCUIElementTypeCell
+    #     # 8x XCUIElementTypeOther
+    #     # 2x XCUIElementTypeWindow
+    #     # 1x XCUIElementTypeStatusBar
+    #     # 1x XCUIElementTypeTable
+    #     # 1x XCUIElementTypeNavigationBar
+    #     # 1x XCUIElementTypeApplication
+    #
     def page_class
       puts get_page_class
       nil
     end
 
+    # Prints xml of the current page
+    # @return [void]
+    def source
+      _print_source get_source
+    end
+
+    # Returns XML string for the current page
+    # Same as driver.page_source
+    # @return [String]
+    def get_source
+      @driver.page_source
+    end
+
     # Converts pixel values to window relative values
     #
-    # ```ruby
-    # px_to_window_rel x: 50, y: 150
-    # ```
+    # @example
+    #
+    #   px_to_window_rel x: 50, y: 150 #=> #<OpenStruct x="50.0 / 375.0", y="150.0 / 667.0">
+    #
     def px_to_window_rel(opts = {}, driver = $driver)
       w = driver.window_size
       x = opts.fetch :x, 0
@@ -142,6 +182,7 @@ module Appium
       @strings_xml[id]
     end
 
+    # @private
     class HTMLElements < Nokogiri::XML::SAX::Document
       attr_reader :filter
 

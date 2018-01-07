@@ -30,30 +30,6 @@ describe 'driver' do
     assert_equal expected, actual
   end
 
-  t 'verify Appium::Driver::Capabilities.init_caps_for_appium' do
-    expected_app = File.absolute_path('UICatalog.app')
-    caps = ::Appium::Core::Driver::Capabilities.init_caps_for_appium(platformName:    'ios',
-                                                                     platformVersion: '10.3',
-                                                                     automationName:  'XCUITest',
-                                                                     deviceName:      'iPhone Simulator',
-                                                                     app:             expected_app,
-                                                                     some_capability: 'some_capability')
-    caps_with_json = JSON.parse(caps.to_json)
-    caps_with_json['platformName'].must_equal 'ios'
-    caps_with_json['platformVersion'].must_equal '10.3'
-    caps_with_json['app'].must_equal expected_app
-    caps_with_json['automationName'].must_equal 'XCUITest'
-    caps_with_json['deviceName'].must_equal 'iPhone Simulator'
-    caps_with_json['someCapability'].must_equal 'some_capability'
-
-    caps[:platformName].must_equal 'ios'
-    caps[:platformVersion].must_equal '10.3'
-    caps[:app].must_equal expected_app
-    caps[:automationName].must_equal 'XCUITest'
-    caps[:deviceName].must_equal 'iPhone Simulator'
-    caps[:some_capability].must_equal 'some_capability'
-  end
-
   describe 'Appium::Driver attributes' do
     t 'verify all attributes' do
       actual                = driver_attributes
@@ -62,7 +38,8 @@ describe 'driver' do
 
       expected            = { automation_name:  :xcuitest,
                               custom_url:       false,
-                              export_session:   false,
+                              export_session:   true,
+                              export_session_path: '/tmp/appium_lib_session',
                               default_wait:     30,
                               sauce_username:   nil,
                               sauce_access_key: nil,
@@ -133,10 +110,6 @@ describe 'driver' do
       set_wait
     end
 
-    t 'default_wait attr' do
-      default_wait.must_equal 30
-    end
-
     t 'app_path attr' do
       apk_name = File.basename driver_attributes[:caps][:app]
 
@@ -174,11 +147,6 @@ describe 'driver' do
         sauce_access_key.must_be_nil
       end
     end
-
-    t 'default timeout for http client' do
-      http_client.open_timeout.must_equal 999_999
-      http_client.read_timeout.must_equal 999_999
-    end
   end
 
   describe 'Appium::Driver' do
@@ -205,22 +173,6 @@ describe 'driver' do
       client_version = appium_client_version
       expected = { version: ::Appium::VERSION }
       client_version.must_equal expected
-    end
-
-    t 'set_immediate_value' do
-      go_to_textfields
-
-      message = 'hello'
-
-      element = textfield(1)
-      element.click
-      element.clear
-
-      set_immediate_value(element, message)
-      element.text.must_equal message
-
-      set_wait 10
-      leave_textfields
     end
 
     t 'restart' do

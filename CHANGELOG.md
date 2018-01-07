@@ -3,6 +3,133 @@ Commit based release not is [release_notes.md](./release_notes.md)
 
 Release tags are https://github.com/appium/ruby_lib/releases .
 
+## [Unreleased]
+### 1. Enhancements
+- Bump the core library to 1.2.4
+    - The changelog is [here](https://github.com/appium/ruby_lib_core/blob/master/CHANGELOG.md#124---2018-01-03)
+
+### 2. Bug fixes
+
+### 3. Deprecations
+
+## v9.8.2
+### 1. Enhancements
+- add `shell` command wrapped `mobile: shell` for Android [#732](https://github.com/appium/ruby_lib/pull/732)
+- add handling multiple apps for iOS [#729](https://github.com/appium/ruby_lib/issues/729)
+- Adapt W3C commands and make sure to work Appium 1.7.2+
+    - Which module, msjsonwp or w3c, used depends on server side's response.
+
+### 2. Bug fixes
+
+### 3. Deprecations
+
+## v9.8.1
+### 1. Enhancements
+
+### 2. Bug fixes
+- Fix creating session for the new W3C createSession
+    - https://github.com/appium/appium/pull/9791
+
+### 3. Deprecations
+
+## v9.8.0
+
+### 1. Enhancements
+- Add start/stop recording screen [#674](https://github.com/appium/ruby_lib/issues/674)
+- replace core directory to core library [#665](https://github.com/appium/ruby_lib/issues/665), [#718](https://github.com/appium/ruby_lib/pull/718)
+    - No change for users
+
+### 2. Bug fixes
+
+### 3. Deprecations
+- `ap_` prefixed logging
+- `source_window`: use `get_source` instead
+- `ios_version`: use `platform_version` instead
+- `current_app`: use `current_activity`, for example to know current app.
+
+## v9.7.5
+
+### 1. Enhancements
+
+### 2. Bug fixes
+- [fix: take care capybara case #716](https://github.com/appium/ruby_lib/pull/716)
+
+### 3. Deprecations
+
+## v9.7.4
+
+### 1. Enhancements
+- Add unlock command: [PR](https://github.com/appium/ruby_lib/pull/710/files)
+- Be able to call `source` command from any `automationName`
+
+### 2. Bug fixes
+
+### 3. Deprecations
+
+## v9.7.3
+
+### 1. Enhancements
+- Get source from XCUITest with `xcuitest_source format: :json`
+    - https://github.com/appium/ruby_lib/pull/699
+- `:espresso` support
+
+### 2. Bug fixes
+
+
+### 3. Deprecations
+
+## v9.7.2
+
+### 1. Enhancements
+- Raise error if capability is wrong
+    - [validate `caps` and `appium_lib` #684](https://github.com/appium/ruby_lib/issues/684)
+
+### 2. Bug fixes
+- `Bug: NoMethodError: undefined method 'write_session_id' for #<Appium::Core::Driver:0x00007fa69119ce88>` [#686](https://github.com/appium/ruby_lib/issues/686)
+- undefined local variable or method `patch_webdriver_element' [#687](https://github.com/appium/ruby_lib/issues/687)
+
+### 3. Deprecations
+
+## v9.7.1
+Hot-fix for v9.7.0: [uninitialized constant Appium::VERSION #680](https://github.com/appium/ruby_lib/issues/680)
+
+## v9.7.0
+
+_v9.7.0_ has [a bunch of refactoring](https://github.com/appium/ruby_lib/issues/602#issuecomment-331140219) but the behaviours must be the same as well as previous versions.
+I've checked the behaviour and confirmed test cases in this repository. So, please create issues if you have any issues against this version.
+
+### 1. Enhancements
+- Refactoring
+```
+lib/appium_lib         # root directory
+              /core    # Minumul driver files for the Appium server and dependencies for Selenium Driver.
+              /common  # Appium related(some methods to make ruby_lib useful)
+              /android # for Android
+              /ios     # for iOS
+```
+
+- The `core` directory will separate as the other gem in [separate core as core ruby gem #665](https://github.com/appium/ruby_lib/issues/665)
+- Logs
+    - `get_available_log_types`: To get a list of available log types
+    - `get_log(type)`: To get logs associated with `type`
+
+### 2. Bug fixes
+
+### 3. Deprecations
+- [refactor: Reduce patch_webdriver_element and some DEPRECATIONs #663](https://github.com/appium/ruby_lib/pull/663)
+    - Remove deprecated methods:
+        - Android
+            - `client_xpath/client_xpaths`
+                - Please use `xpath` or `find_element/s(:xpath, "xpaths")`
+        - iOS
+            - `get_page`
+                - Please use `source` instead
+    - Deprecated
+        - iOS
+            - `ios_version`, `source_window`, `page_window`
+              - Please use `source` instead
+
+
 ## v9.6.1
 ### 1. Enhancements
 - Refactor `XCUItest` for iOS and `uiautomator2` for Android a bit
@@ -19,7 +146,7 @@ Release tags are https://github.com/appium/ruby_lib/releases .
       ```ruby
       Appium::Driver.new(opts, true).start_driver # $driver is defined.
       Appium::Driver.new(opts, false).start_driver # $driver isn't defined.
-      ``` 
+      ```
         - [link](https://github.com/appium/ruby_lib/blob/master/docs/ios_docs.md#initialize)
     - We need to provide `driver` to work `TouchAction` and `MultiAction` without global driver
         - `TouchAction`
